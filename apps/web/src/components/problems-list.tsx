@@ -113,7 +113,9 @@ const ProblemsList = () => {
                     </td>
                     <Link href="/problem">
                       <td className="px-6 py-4 whitespace-nowrap hover:cursor-pointer hover:text-blue-700 text-base">
-                        {problem.title.slice(0, 70)}
+                        {problem.title.length > 70
+                          ? problem.title.slice(0, 67) + "..."
+                          : problem.title}
                       </td>
                     </Link>
                     <td

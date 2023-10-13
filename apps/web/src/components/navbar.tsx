@@ -4,10 +4,7 @@ export default async function Navbar() {
   const session = await getServerSession();
   return (
     <div
-      style={{
-        borderBottomWidth: "0.3px",
-      }}
-      className="flex justify-between px-10 items-center h-16 border-neutral-600 border-opacity-70"
+      className="flex justify-between px-10 items-center h-16 border-default-bottom"
     >
       <div>
         <h1 className="text-lg md:text-xl font-bold">CodeStreax</h1>

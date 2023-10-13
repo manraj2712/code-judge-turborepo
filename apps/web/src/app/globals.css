@@ -41,6 +41,16 @@ code{
   margin-bottom: 20px;
 }
 
+.border-default{
+  border-width: 0.3px;
+  @apply border-neutral-600 border-opacity-70
+}
+
+.border-default-bottom{
+  border-bottom-width: 0.3px;
+  @apply border-neutral-600 border-opacity-70
+}
+
 
 ::-webkit-scrollbar {
   width: 5px;

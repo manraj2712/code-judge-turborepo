@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NextAuthProvider from "../providers/next-auth-provider";
 import RecoilRootLayout from "../providers/recoil-root-provider";
-import Navbar from "@/components/navbar/navbar";
+import Navbar from "@/components/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import SplitPane, { Pane } from "split-pane-react";
 import "split-pane-react/esm/themes/default.css";
 
-import ProblemHeaderComponent from "@/components/problem/problem_header";
-import ProblemDescription from "@/components/problem/problem_description";
-import EditorBottomBar from "@/components/problem/editor_bottom_bar";
-import SubmissionBottomSheet from "@/components/problem/submission_bottom_sheet";
+import ProblemHeaderComponent from "@/components/problem/problem-header";
+import ProblemDescription from "@/components/problem/problem-description";
+import EditorBottomBar from "@/components/problem/editor-bottom-bar";
+import SubmissionBottomSheet from "@/components/problem/submission-bottom-sheet";
 const code: string = `
 class Solution{
   public:

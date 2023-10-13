@@ -1,6 +1,6 @@
 "use client";
-import FiltersSidebar from "@/components/FiltersSidebar";
-import ProblemsList from "@/components/ProblemsList";
+import FiltersSidebar from "@/components/filters-sidebar";
+import ProblemsList from "@/components/problems-list";
 
 export default function Sidebar() {
   return (
