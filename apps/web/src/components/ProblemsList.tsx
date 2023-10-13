@@ -1,5 +1,5 @@
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
-import React from "react";
+import Link from "next/link";
 
 const columns = [
   { id: "status", label: "Status" },
@@ -26,7 +26,8 @@ const problems = [
   {
     id: "3",
     status: "AC",
-    title: "Longest Substring Without Repeating Characters",
+    title:
+      "Longest Substring Without Repeating Characters this is a very long title to test the table width and overflow behavior of the table cell and the table itself ",
     acceptance: "66%",
     difficulty: "Medium",
   },
@@ -74,9 +75,9 @@ const problems = [
   },
 ];
 
-const ProblemSet = () => {
+const ProblemsList = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full px-5">
       <div className=" overflow-x-auto">
         <div className="p-1.5 min-w-full inline-block align-middle">
           <div className="overflow-hidden">
@@ -99,20 +100,22 @@ const ProblemSet = () => {
               </thead>
               <tbody>
                 {problems.map((problem) => (
-                  <tr className="odd:bg-neutral-900">
-                    <td className="px-6 py-4 whitespace-nowrap text-base text-gray-800 dark:text-gray-200">
+                  <tr className="odd:bg-neutral-900 text-gray-200">
+                    <td className="px-6 py-4 whitespace-nowrap text-base">
                       {problem.status === "AC" ? (
                         <CheckCircleIcon className="text-green-500 h-6 w-6" />
                       ) : (
                         <></>
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-base text-left text-gray-800 dark:text-gray-200">
+                    <td className="px-6 py-4 whitespace-nowrap text-left text-base">
                       {problem.acceptance}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-base hover:cursor-pointer hover:text-blue-700 text-gray-800 dark:text-gray-200">
-                      {problem.title}
-                    </td>
+                    <Link href="/problem">
+                      <td className="px-6 py-4 whitespace-nowrap hover:cursor-pointer hover:text-blue-700 text-base">
+                        {problem.title.slice(0, 70)}
+                      </td>
+                    </Link>
                     <td
                       className={`px-6 py-4 whitespace-nowrap text-center text-base ${getDifficultyColor(
                         problem.difficulty
@@ -131,8 +134,6 @@ const ProblemSet = () => {
   );
 };
 
-export default ProblemSet;
-
 const getDifficultyColor = (difficulty: string) => {
   switch (difficulty) {
     case "Easy":
@@ -145,3 +146,5 @@ const getDifficultyColor = (difficulty: string) => {
       return "text-green-500";
   }
 };
+
+export default ProblemsList;
