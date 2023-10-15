@@ -2,11 +2,10 @@
 import VideoThumb from "@/../public/images/hero-image.png";
 import ModalVideo from "@/components/home/modal-video";
 
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Hero() {
-
-    const router = useRouter();
+  const router = useRouter();
   return (
     <section className="relative">
       {/* Illustration behind hero content */}
@@ -49,9 +48,9 @@ export default function Hero() {
               className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4"
               data-aos="zoom-y-out"
             >
-              Make your website{" "}
+              Unlock the Enigma of{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">
-                wonderful
+                Code
               </span>
             </h1>
             <div className="max-w-3xl mx-auto">
@@ -60,8 +59,8 @@ export default function Hero() {
                 data-aos="zoom-y-out"
                 data-aos-delay="150"
               >
-                Our landing page template works on all devices, so you only have
-                to set it up once, and get beautiful results forever.
+                Embark on a Brain-Teasing Journey to Master Coding Challenges
+                and Problem-Solving Skills.
               </p>
               <div
                 className="max-w-xs mx-auto sm:max-w-none sm:flex sm:gap-5 justify-center"
