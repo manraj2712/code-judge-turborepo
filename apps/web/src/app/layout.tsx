@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NextAuthProvider from "../providers/next-auth-provider";
 import RecoilRootLayout from "../providers/recoil-root-provider";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/navbar/navbar";
+import NavbarProfile from "@/components/navbar/navbar-profile";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <RecoilRootLayout>
           <NextAuthProvider>
-            <Navbar></Navbar>
+            <Navbar>
+              <NavbarProfile />
+            </Navbar>
             {children}
           </NextAuthProvider>
         </RecoilRootLayout>
