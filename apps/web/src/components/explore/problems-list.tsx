@@ -8,7 +8,13 @@ const columns = [
   { id: "difficulty", label: "Difficulty" },
 ];
 
-const problems = [
+const problems: Array<{
+  id: string;
+  status: string;
+  title: string;
+  acceptance: string;
+  difficulty: string;
+}> = [
   {
     id: "1",
     status: "AC",
@@ -78,19 +84,25 @@ const problems = [
 const ProblemsList = () => {
   return (
     <div className="flex flex-col w-full px-5">
-      <div className=" overflow-x-auto">
+      <div className="overflow-x-auto">
         <div className="p-1.5 min-w-full inline-block align-middle">
           <div className="overflow-hidden">
-            <table className="table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <table className="table-fixed md:table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead>
                 <tr>
                   {columns.map((column, index) => (
                     <th
                       key={column.id}
-                      className={`px-6 py-3 ${
+                      className={`md:px-6 py-3 ${
                         index === columns.length - 1
                           ? "text-center"
                           : "text-left"
+                      } ${
+                        ["acceptance", "status"].includes(column.id)
+                          ? "hidden md:table-cell"
+                          : ""
+                      } ${
+                        column.id == "title" ? "w-[70%]" : "w-auto"
                       } text-base font-medium text-gray-500 dark:text-gray-200`}
                     >
                       {column.label}
@@ -100,26 +112,30 @@ const ProblemsList = () => {
               </thead>
               <tbody>
                 {problems.map((problem) => (
-                  <tr className="odd:bg-neutral-900 text-gray-200">
-                    <td className="px-6 py-4 whitespace-nowrap text-base">
+                  <tr
+                    key={problem.id}
+                    className="odd:bg-neutral-900 text-gray-200"
+                  >
+                    <td className="hidden md:table-cell px-6 py-4 text-base">
                       {problem.status === "AC" ? (
                         <CheckCircleIcon className="text-green-500 h-6 w-6" />
                       ) : (
                         <></>
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-left text-base">
+                    <td className="hidden md:table-cell px-6 py-4 text-left text-base">
                       {problem.acceptance}
                     </td>
-                    <Link href="/problem">
-                      <td className="px-6 py-4 whitespace-nowrap hover:cursor-pointer hover:text-blue-700 text-base">
-                        {problem.title.length > 70
-                          ? problem.title.slice(0, 67) + "..."
+
+                    <td className="w-[70%] md:w-auto hide-multi-line md:px-6 py-4 hover:cursor-pointer hover:text-blue-700 text-base">
+                      <Link href="/problem">
+                        {problem.title.length > 50
+                          ? problem.title.slice(0, 47) + "..."
                           : problem.title}
-                      </td>
-                    </Link>
+                      </Link>
+                    </td>
                     <td
-                      className={`px-6 py-4 whitespace-nowrap text-center text-base ${getDifficultyColor(
+                      className={`px-6 py-4 text-center text-base ${getDifficultyColor(
                         problem.difficulty
                       )}`}
                     >

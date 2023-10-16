@@ -40,7 +40,7 @@ const FiltersSidebar = () => {
   );
   return (
     <div
-      className={` ${
+      className={`hidden sm:block ${
         open ? "w-60" : "w-40 "
       } flex flex-col h-screen p-3 bg-neutral-900 shadow duration-300`}
     >

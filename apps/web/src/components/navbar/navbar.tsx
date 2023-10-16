@@ -1,6 +1,7 @@
 "use client";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 const navigation = [
   { name: "Home", href: "#", current: true },
   { name: "Team", href: "#", current: false },
@@ -33,9 +34,11 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <h1 className="text-lg md:text-xl font-bold  text-white">
-                    CodeStreax
-                  </h1>
+                  <Link href={"/"}>
+                    <h1 className="text-lg md:text-xl font-bold  text-white">
+                      CodeStreax
+                    </h1>
+                  </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
