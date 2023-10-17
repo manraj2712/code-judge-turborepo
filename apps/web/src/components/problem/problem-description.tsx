@@ -9,7 +9,7 @@ export default function ProblemDescription({ description }: { description: strin
     }, []);
     
     return (
-        <div>
+        <div className="text-sm">
             {mounted &&  <p style={{
                 lineHeight: "1.5",
                 textAlign: "justify",

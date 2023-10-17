@@ -2,18 +2,21 @@
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-const navigation = [
-  { name: "Home", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-];
+import Image from "next/image";
+import logo from "@/../public/images/logo.png";
+import { useState } from "react";
 
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar({ children }: { children: React.ReactNode }) {
+  const url = window.location.pathname;
+
+  const navigation = [
+    { name: "Home", href: "/", current: url === "/" },
+    { name: "Explore", href: "/explore", current: url === "/explore" },
+  ];
   return (
     <Disclosure as="nav" className="border-default-bottom">
       {({ open }) => (
@@ -35,15 +38,19 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <Link href={"/"}>
-                    <h1 className="text-lg md:text-xl font-bold  text-white">
-                      CodeStreax
-                    </h1>
+                    <div className="flex gap-2 align-middle">
+                      <Image src={logo} alt="logo" className="h-8 w-8" />
+                      <h1 className="text-lg md:text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">
+                        <span className="text-white">Code</span>
+                        Streax
+                      </h1>
+                    </div>
                   </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
+                    {navigation.map((item, index) => (
+                      <Link
                         key={item.name}
                         href={item.href}
                         className={classNames(
@@ -55,7 +62,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
