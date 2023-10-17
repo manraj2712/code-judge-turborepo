@@ -5,7 +5,7 @@ import NextAuthProvider from "../providers/next-auth-provider";
 import RecoilRootLayout from "../providers/recoil-root-provider";
 import Navbar from "@/components/navbar/navbar";
 import NavbarProfile from "@/components/navbar/navbar-profile";
-
+import Footer from "@/components/footer/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -27,6 +27,7 @@ export default function RootLayout({
               <NavbarProfile />
             </Navbar>
             {children}
+            <Footer/>
           </NextAuthProvider>
         </RecoilRootLayout>
       </body>
