@@ -70,6 +70,7 @@ export default function Hero() {
                 <button
                   onClick={() => {
                     router.push("/explore");
+                    
                   }}
                   className="cta-button-primary"
                 >

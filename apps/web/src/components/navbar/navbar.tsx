@@ -4,15 +4,18 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/../public/images/logo.png";
+// import { useRouter } from "next/router";
 
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar({ children }: { children: React.ReactNode }) {
+  // const router = useRouter(); // Get the current router instance
+  const currentPath = window.location.pathname; // Get the current pathname
   const navigation = [
-    { name: "Home", href: "/", current: true },
-    { name: "Explore", href: "/explore", current: false },
+    { name: "Home", href: "/", current: currentPath==="/"?true:false},
+    { name: "Explore", href: "/explore", current: currentPath==="/explore"?true:false },
   ];
   return (
     <Disclosure as="nav" className="border-default-bottom">
@@ -47,7 +50,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item, index) => (
-                      <Link
+                      <a
                         key={item.name}
                         href={item.href}
                         className={classNames(
@@ -59,7 +62,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
-                      </Link>
+                      </a>
                     ))}
                   </div>
                 </div>
