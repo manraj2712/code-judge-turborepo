@@ -8,7 +8,9 @@ export default function Sidebar() {
     <div className="flex">
       <FiltersSidebar />
       <ProblemsList />
-      <Calendar />
+      <div className="hidden xl:flex pr-2 mr-2">
+        <Calendar />
+      </div>
     </div>
   );
 }

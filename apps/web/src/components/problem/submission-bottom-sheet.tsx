@@ -1,43 +1,48 @@
-'use client';
+"use client";
 import { bottomSheetState } from "@/store/atoms/problem";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import ProcessingSpinner from "../utils/processing_spinner";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-async function submitCode(code: string){
-  console.log('submitting the code');
-  const response = await axios.post('http://localhost:3000/api/submit-code', {code: code});
-  console.log(response);
+async function submitCode(code: string) {
+  const response = await axios.post("http://localhost:3000/api/submit-code", {
+    code: code,
+  });
   return response;
 }
 
-export default function SubmissionBottomSheet({solutionClassCode}: {solutionClassCode: string}) {
-
+export default function SubmissionBottomSheet({
+  solutionClassCode,
+}: {
+  solutionClassCode: string;
+}) {
   const [loading, setLoading] = useState(false);
-  const [output, setOutput] = useState('');
+  const [output, setOutput] = useState("");
   const open = useRecoilValue(bottomSheetState);
 
-  useEffect(()=>{
-    if(!open) return;
-    setLoading(true)
-    submitCode(solutionClassCode).then((resp)=>{
-      console.log(resp.data.output);
-      setOutput(resp.data.output);
-    }).catch((err)=>{
-      setOutput(err.response.data.error.toString());
-    }).finally(()=>{
-      setLoading(false);
-    })
+  useEffect(() => {
+    if (!open) return;
+    setLoading(true);
+    submitCode(solutionClassCode)
+      .then((resp) => {
+        console.log(resp.data.output);
+        setOutput(resp.data.output);
+      })
+      .catch((err) => {
+        setOutput(err.response.data.error.toString());
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [open]);
 
-  },[open])
-  
   return (
     <>
       {open && (
         <div
           style={{
-            padding: '10px',
+            padding: "10px",
             justifyContent: "start",
             height: "calc(100vh - 4rem)",
             width: "99%",

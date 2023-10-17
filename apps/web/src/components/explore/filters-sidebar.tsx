@@ -2,6 +2,7 @@
 import { ChangeEvent, useCallback, useState } from "react";
 import { questionDifficultyLevels, questionStatuses } from "@/constants";
 import FilterCheckboxGroup from "./filter-checkbox-group";
+import Calendar from "./calendar";
 
 const FiltersSidebar = () => {
   const [open, setOpen] = useState(true);
@@ -39,30 +40,13 @@ const FiltersSidebar = () => {
     [statuses]
   );
   return (
-    <div
-      className={`hidden sm:block ${
-        open ? "w-60" : "w-40 "
-      } flex flex-col h-screen p-3 bg-neutral-900 shadow duration-300`}
-    >
+    <div className="hidden sm:block w-80 xl:w-56 flex-col p-3 bg-neutral-900 shadow duration-300 overflow-y-auto">
+      <div className="flex xl:hidden">
+        <Calendar />
+      </div>
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-white">Filters</h2>
-          <button onClick={() => setOpen(!open)}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
-          </button>
         </div>
         <div className="relative pt-2">
           <span className="absolute inset-y-0 left-0 flex items-center py-4">

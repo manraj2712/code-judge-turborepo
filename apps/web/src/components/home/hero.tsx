@@ -41,11 +41,11 @@ export default function Hero() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Hero content */}
-        <div className="pt-32 pb-12 md:pt-40 md:pb-20">
+        <div className="pt-24 pb-12 md:pt-40 md:pb-20">
           {/* Section header */}
           <div className="text-center pb-12 md:pb-16">
             <h1
-              className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4"
+              className="text-5xl md:text-6xl font-extrabold leading-tight tracking-tighter mb-4"
               data-aos="zoom-y-out"
             >
               Unlock the Enigma of{" "}
@@ -55,7 +55,7 @@ export default function Hero() {
             </h1>
             <div className="max-w-3xl mx-auto">
               <p
-                className="text-xl text-gray-200 mb-8"
+                className="sm:text-xl text-base text-gray-200 mb-8"
                 data-aos="zoom-y-out"
                 data-aos-delay="150"
               >
@@ -63,7 +63,7 @@ export default function Hero() {
                 and Problem-Solving Skills.
               </p>
               <div
-                className="max-w-xs mx-auto sm:max-w-none sm:flex sm:gap-5 justify-center"
+                className=" mx-auto flex gap-5 justify-center"
                 data-aos="zoom-y-out"
                 data-aos-delay="300"
               >
@@ -71,13 +71,13 @@ export default function Hero() {
                   onClick={() => {
                     router.push("/explore");
                   }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 md:py-4 px-6 md:px-10 rounded"
                 >
                   Explore
                 </button>
                 <button
                   onClick={() => {}}
-                  className="bg-gray-900 hover:bg-gray-800 text-white font-bold py-4 px-10 rounded"
+                  className="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 md:py-4 px-6 md:px-10 rounded"
                 >
                   Sign up
                 </button>

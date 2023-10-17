@@ -1,7 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import dayjs from "dayjs";
-import Dropdown from "./dropdown";
-
+const dateToday = dayjs();
 const Calendar = () => {
   const monthNames = [
     "January",
@@ -17,49 +16,44 @@ const Calendar = () => {
     "November",
     "December",
   ];
-  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [selectedDate, setSelectedDate] = useState(dateToday);
   const [month, setMonth] = useState(monthNames[selectedDate.month()]);
   const daysInMonth = selectedDate.daysInMonth();
   const firstDayOfMonth = selectedDate.startOf("month");
   const startingDay = firstDayOfMonth.day();
-  const [year, setYear] = useState(selectedDate.year());
 
   const handleMonthChange = (month: number) => {
-    setSelectedDate(selectedDate.set("month", month));
-  };
-
-  const handleYearChange = (year: number) => {
-    setSelectedDate(selectedDate.set("year", year));
+    setSelectedDate(() => selectedDate.set("month", month));
+    setMonth(() => monthNames[month]);
   };
 
   return (
-    <div className="hidden md:block p-4">
-      <div className="flex mb-4">
-        <div className="mr-2 ">
-          <Dropdown
-            items={monthNames}
-            value={month}
-            onChange={(e) => {
-              setMonth((month) => e);
-              setSelectedDate(selectedDate.set("month", monthNames.indexOf(e)));
+    <div className="py-4">
+      <div className="flex mb-4 w-full justify-between">
+        <div className="mr-2">{month}</div>
+        <div className="flex gap-4">
+          <button
+            className="text-neutral-300 text-sm"
+            onClick={() => {
+              handleMonthChange(selectedDate.month() - 1);
             }}
-          />
-        </div>
-        <div className="mr-2 ">
-          <Dropdown
-            items={[dayjs().year().toString()]}
-            value={year.toString()}
-            onChange={(e) => {
-              setYear(Number(e));
-              setSelectedDate(selectedDate.set("year", Number(e)));
+          >
+            {"<"}
+          </button>
+          <button
+            className="text-neutral-300 text-sm"
+            onClick={() => {
+              handleMonthChange(selectedDate.month() + 1);
             }}
-          />
+          >
+            {">"}
+          </button>
         </div>
       </div>
-      <div className="flex justify-around mb-2">
+      <div className="grid grid-cols-7 gap-2 mb-2">
         {["S", "M", "T", "W", "T", "F", "S"].map((day, index) => {
           return (
-            <p key={index} className="text-neutral-400">
+            <p key={index} className="text-neutral-400 w-6 h-6 text-center">
               {day}
             </p>
           );
@@ -71,11 +65,11 @@ const Calendar = () => {
         ))}
 
         {Array.from({ length: daysInMonth }, (_, i) => (
-          <div key={`day-${i}`} className="text-center">
+          <div key={`day-${i}`} className="text-center cursor-pointer w-6 h-6">
             <div
-              className={` text-sm w-6 h-6 m-auto text-neutral-300 ${
+              className={`w-5 h-5 text-center text-sm m-auto text-neutral-300 ${
                 Number(dayjs().date()) == i + 1
-                  ? "bg-green-500 rounded-full text-white"
+                  ? "bg-blue-600 rounded-full text-white"
                   : ""
               }`}
             >
