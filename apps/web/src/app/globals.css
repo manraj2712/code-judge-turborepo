@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   background-color: black;
 }
@@ -17,13 +16,13 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-code{
-  font-family: 'Roboto Mono', monospace;
+code {
+  font-family: "Roboto Mono", monospace;
   font-weight: 400;
   font-size: 14px;
 }
 
-.code_container{
+.code_container {
   background-color: rgb(66, 66, 66);
   padding: 10px 20px;
   border-radius: 5px;
@@ -31,16 +30,19 @@ code{
   margin-bottom: 20px;
 }
 
-.border-default{
+.border-default {
   border-width: 0.3px;
-  @apply border-neutral-600 border-opacity-70
+  @apply border-neutral-600 border-opacity-70;
 }
 
-.border-default-bottom{
+.border-default-bottom {
   border-bottom-width: 0.3px;
-  @apply border-neutral-600 border-opacity-70
+  @apply border-neutral-600 border-opacity-70;
 }
-
+.border-default-top {
+  border-top-width: 0.3px;
+  @apply border-neutral-600 border-opacity-70;
+}
 
 ::-webkit-scrollbar {
   width: 5px;
@@ -48,7 +50,7 @@ code{
 }
 
 ::-webkit-scrollbar-thumb {
-  background: grey; 
+  background: grey;
   border-radius: 10px;
 }
 
@@ -57,18 +59,17 @@ code{
   border-radius: 10px;
 }
 
-.hide-multi-line{
-
-overflow: hidden;
-white-space: nowrap;
-text-overflow: ellipsis;
-max-width: calc(50vw);
+.hide-multi-line {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: calc(50vw);
 }
 
-.cta-button-primary{
-  @apply bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 md:py-4 px-6 md:px-10 rounded
+.cta-button-primary {
+  @apply bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 md:py-4 px-6 md:px-10 rounded;
 }
 
-.cta-button-gray{
-  @apply bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 md:py-4 px-6 md:px-10 rounded
+.cta-button-gray {
+  @apply bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 md:py-4 px-6 md:px-10 rounded;
 }
