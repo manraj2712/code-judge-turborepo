@@ -71,14 +71,11 @@ export default function Hero() {
                   onClick={() => {
                     router.push("/explore");
                   }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 md:py-4 px-6 md:px-10 rounded"
+                  className="cta-button-primary"
                 >
                   Explore
                 </button>
-                <button
-                  onClick={() => {}}
-                  className="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 md:py-4 px-6 md:px-10 rounded"
-                >
+                <button onClick={() => {}} className="cta-button-gray">
                   Sign up
                 </button>
               </div>
