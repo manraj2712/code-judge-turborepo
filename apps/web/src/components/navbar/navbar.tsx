@@ -4,18 +4,15 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/../public/images/logo.png";
-import { useState } from "react";
 
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar({ children }: { children: React.ReactNode }) {
-  const url = window.location.pathname;
-
   const navigation = [
-    { name: "Home", href: "/", current: url === "/" },
-    { name: "Explore", href: "/explore", current: url === "/explore" },
+    { name: "Home", href: "/", current: true },
+    { name: "Explore", href: "/explore", current: false },
   ];
   return (
     <Disclosure as="nav" className="border-default-bottom">

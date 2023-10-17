@@ -23,8 +23,10 @@ const Calendar = () => {
   const startingDay = firstDayOfMonth.day();
 
   const handleMonthChange = (month: number) => {
-    setSelectedDate(() => selectedDate.set("month", month));
-    setMonth(() => monthNames[month]);
+    if (month >= 0 && month <= dateToday.month()) {
+      setSelectedDate(() => selectedDate.set("month", month));
+      setMonth(() => monthNames[month]);
+    }
   };
 
   return (
@@ -33,7 +35,8 @@ const Calendar = () => {
         <div className="mr-2">{month}</div>
         <div className="flex gap-4">
           <button
-            className="text-neutral-300 text-sm"
+            className="text-neutral-300 text-sm disabled:text-neutral-500"
+            disabled={selectedDate.month() == 0}
             onClick={() => {
               handleMonthChange(selectedDate.month() - 1);
             }}
@@ -41,7 +44,8 @@ const Calendar = () => {
             {"<"}
           </button>
           <button
-            className="text-neutral-300 text-sm"
+            className="text-neutral-300 text-sm disabled:text-neutral-500"
+            disabled={selectedDate.month() == dateToday.month()}
             onClick={() => {
               handleMonthChange(selectedDate.month() + 1);
             }}
@@ -68,7 +72,8 @@ const Calendar = () => {
           <div key={`day-${i}`} className="text-center cursor-pointer w-6 h-6">
             <div
               className={`w-5 h-5 text-center text-sm m-auto text-neutral-300 ${
-                Number(dayjs().date()) == i + 1
+                Number(dayjs().date()) == i + 1 &&
+                month == monthNames[dayjs().month()]
                   ? "bg-blue-600 rounded-full text-white"
                   : ""
               }`}
@@ -77,7 +82,8 @@ const Calendar = () => {
             </div>
             <div
               className={`${
-                i + 1 < Number(dayjs().date())
+                i + 1 < Number(dayjs().date()) ||
+                month != monthNames[dayjs().month()]
                   ? " rounded-full bg-red-600 w-[5px] h-[5px] mx-auto"
                   : "hidden"
               }
