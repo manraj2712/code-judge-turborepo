@@ -35,7 +35,7 @@ export default function ProblemSubmittionScreen() {
 
   return (
     <div>
-      <div className="hidden lg:block" style={{ height: "calc(100vh - 4rem)" }}>
+      <div className="hidden lg:block h-[calc(100vh-64px)]">
         <SplitPane
           sizes={sizes}
           onChange={(newsize: any) => setSizes(newsize)}
