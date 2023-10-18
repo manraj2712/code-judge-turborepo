@@ -1271,12 +1271,12 @@ clone@^1.0.2:
     "@headlessui/react" "^1.7.17"
     "@heroicons/react" "^2.0.18"
     "@monaco-editor/react" "^4.5.2"
-    "@prisma/client" "^5.3.1"
     "@types/node" "20.6.1"
     "@types/react" "18.2.28"
     "@types/react-dom" "18.2.7"
     autoprefixer "10.4.15"
     axios "^1.5.0"
+    database "*"
     dayjs "^1.11.10"
     next "13.4.19"
     next-auth "^4.23.1"
@@ -1390,6 +1390,12 @@ data-uri-to-buffer@^6.0.0:
   version "6.0.1"
   resolved "https://registry.npmjs.org/data-uri-to-buffer/-/data-uri-to-buffer-6.0.1.tgz"
   integrity sha512-MZd3VlchQkp8rdend6vrx7MmVDJzSNTBvghvKjirLkD+WTChA3KUf0jkE68Q4UyctNqI11zZO9/x2Yx+ub5Cvg==
+
+database@*, "database@file:E:\\NEXTJS\\code-judge-turborepo\\packages\\database":
+  version "1.0.0"
+  resolved "file:packages/database"
+  dependencies:
+    "@prisma/client" "^5.3.1"
 
 dayjs@^1.11.10:
   version "1.11.10"
