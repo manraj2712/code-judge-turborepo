@@ -23,7 +23,7 @@ const tabarr = [
 export function Footer() {
   const year = dayjs().year();
   return (
-    <footer className="text-sm flex w-full flex-row flex-wrap items-center justify-center border-default-top py-4 md:px-4 text-center md:justify-between ">
+    <footer className="mt-10 text-sm flex w-full flex-row flex-wrap items-center justify-center border-default-top py-4 md:px-4 text-center md:justify-between ">
       <div className="flex flex-row gap-x-2">
         <h3 color="blue-gray" className="font-normal ml-4">
           &copy; {year}
