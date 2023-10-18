@@ -129,7 +129,6 @@ export default function ModalVideo({
         </div>
       </div>
       {/* End: Video thumbnail */}
-
       <Transition show={modalOpen} afterEnter={() => videoRef.current?.play()}>
         <Dialog initialFocus={videoRef} onClose={() => setModalOpen(false)}>
           {/* Modal backdrop */}

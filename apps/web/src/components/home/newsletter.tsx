@@ -91,7 +91,6 @@ export default function Newsletter() {
                 </g>
               </svg>
             </div>
-
             <div className="relative flex flex-col lg:flex-row justify-between items-center">
               {/* CTA content */}
               <div className="text-center lg:text-left lg:max-w-xl">
