@@ -4,7 +4,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/../public/images/logo.png";
-import {usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(" ");
@@ -19,7 +19,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
     <Disclosure as="nav" className="border-default-bottom">
       {({ open }) => (
         <>
-          <div className="mx-auto px-2 sm:px-6 lg:px-8">
+          <div className="mx-auto px-2 sm:px-6 lg:px-8 max-h-[63px]">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
