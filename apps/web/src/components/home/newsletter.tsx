@@ -91,14 +91,13 @@ export default function Newsletter() {
                 </g>
               </svg>
             </div>
-
             <div className="relative flex flex-col lg:flex-row justify-between items-center">
               {/* CTA content */}
               <div className="text-center lg:text-left lg:max-w-xl">
                 <h3 className="h3 text-white mb-2">
                   Want more tutorials & guides?
                 </h3>
-                <p className="text-gray-300 text-lg mb-6">
+                <p className="text-gray-300 text-lg md:text-xl mb-6">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit nemo
                   expedita voluptas culpa sapiente.
                 </p>

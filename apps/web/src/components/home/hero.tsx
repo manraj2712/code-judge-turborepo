@@ -38,7 +38,6 @@ export default function Hero() {
           </g>
         </svg>
       </div>
-
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Hero content */}
         <div className="pt-24 pb-12 md:pt-40 md:pb-20">
@@ -70,6 +69,7 @@ export default function Hero() {
                 <button
                   onClick={() => {
                     router.push("/explore");
+                    
                   }}
                   className="cta-button-primary"
                 >
