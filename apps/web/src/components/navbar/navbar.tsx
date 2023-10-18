@@ -50,7 +50,6 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item, index) => {
-                      item.current = usePathname() === item.href;
                       return (
                         <Link
                           key={item.name}
