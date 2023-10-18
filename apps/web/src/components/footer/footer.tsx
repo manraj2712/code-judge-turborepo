@@ -35,8 +35,11 @@ export function Footer() {
       </div>
       <div className="flex flex-row mx-4 flex-wrap gap-x-2 justify-center items-center">
         {tabarr.map((item, index) => (
-          <div className="flex flex-row flex-wrap gap-x-2 text-neutral-300" key={index}>
-            <Link href={item.href} >
+          <div
+            key={index}
+            className="flex flex-row flex-wrap gap-x-2 text-neutral-300"
+          >
+            <Link href={item.href}>
               {item.name}
             </Link>
             <p>{index !== tabarr.length - 1 ? "|" : ""}</p>

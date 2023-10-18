@@ -1,0 +1,16 @@
+
+.section-heading {
+  @apply mb-2 lg:mb-4 font-extrabold text-3xl sm:text-4xl lg:text-5xl;
+}
+
+.section-subheading {
+    @apply text-base sm:text-xl
+}
+
+.features-block-item-h{
+    @apply text-lg sm:text-xl font-bold leading-snug tracking-tight mb-1 text-black
+}
+
+.features-block-item-p {
+    @apply text-sm sm:text-base text-gray-600 text-center
+}

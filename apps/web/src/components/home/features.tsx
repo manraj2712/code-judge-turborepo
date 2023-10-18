@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Transition } from "@headlessui/react";
 import Image from "next/image";
 import FeaturesBg from "@/../public/images/features-bg-2.png";
+import "./styles.css"
 
 export default function Features() {
   const [tab, setTab] = useState<number>(1);
@@ -31,11 +32,11 @@ export default function Features() {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-12 md:pt-20">
           {/* Section header */}
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <h1 className="h2 mb-4 text-black font-bold text-2xl sm:text-4xl lg:text-5xl">
+          <div className="max-w-3xl mx-auto text-center pb-10 md:pb-16">
+            <h2 className="section-heading text-black">
               Master Your Coding Skills
-            </h1>
-            <p className="text-sm sm:text-xl text-gray-600">
+            </h2>
+            <p className="section-subheading text-gray-600">
               Empower your journey with these essential features
             </p>
           </div>
@@ -48,10 +49,10 @@ export default function Features() {
               data-aos="fade-right"
             >
               <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
-                <h3 className="h3 mb-3 font-bold text-black text-lg sm:text-xl lg:text-2xl">
+                <h3 className="h3 mb-2 lg:mb-3 font-bold text-black text-lg sm:text-xl lg:text-2xl">
                   Unlock a World of Possibilities
                 </h3>
-                <p className="text-sm lg:text-lg text-gray-600">
+                <p className="text-xl text-gray-600">
                   Explore the key elements that make our platform an invaluable
                   resource for aspiring programmers.
                 </p>
@@ -71,10 +72,10 @@ export default function Features() {
                   }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1 text-black text-lg lg:text-xl">
+                    <div className="font-bold leading-snug tracking-tight mb-1 text-black text-base lg:text-xl">
                       Effortless Coding Practice
                     </div>
-                    <div className="text-gray-600 text-sm lg:text-lg">
+                    <div className="text-gray-600">
                       Sharpen your coding skills with an extensive library of
                       problems and real-time testing.
                     </div>
@@ -102,10 +103,10 @@ export default function Features() {
                   }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1 text-black text-lg lg:text-xl">
+                    <div className="font-bold leading-snug tracking-tight mb-1 text-black text-base lg:text-xl">
                       Instant Code Evaluation
                     </div>
-                    <div className="text-gray-600 text-sm lg:text-lg">
+                    <div className="text-gray-600">
                       Know if your code passes predefined test cases within
                       seconds, helping you learn and improve quickly.
                     </div>
@@ -136,10 +137,10 @@ export default function Features() {
                   }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1 text-black text-lg lg:text-xl">
+                    <div className="font-bold leading-snug tracking-tight mb-1 text-black text-base lg:text-xl">
                       Secure Code Testing
                     </div>
-                    <div className="text-gray-600 text-sm lg:text-lg">
+                    <div className="text-gray-600">
                       Take collaboration to the next level with security and
                       administrative features built for teams.
                     </div>
@@ -160,9 +161,10 @@ export default function Features() {
                 </a>
               </div>
             </div>
+
             {/* Tabs items */}
             <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 md:order-1">
-              <div className="transition-all ">
+              <div className="transition-all">
                 <div
                   className="relative flex flex-col text-center lg:text-right"
                   data-aos="zoom-y-out"
@@ -182,7 +184,7 @@ export default function Features() {
                     beforeEnter={() => heightFix()}
                     unmount={false}
                   >
-                    <div className="relative inline-flex flex-col rounded">
+                    <div className="relative inline-flex flex-col">
                       <Image
                         className="md:max-w-none mx-auto rounded"
                         src={FeaturesBg}

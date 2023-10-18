@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NextAuthProvider from "../providers/next-auth-provider";
 import RecoilRootLayout from "../providers/recoil-root-provider";
-import Footer from "@/components/footer/footer";
 import Navbar from "@/components/navbar/navbar";
 import NavbarProfile from "@/components/navbar/navbar-profile";
 import FooterProvider from "@/components/footer/footer-provider";

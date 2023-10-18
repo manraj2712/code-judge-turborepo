@@ -4,18 +4,16 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/../public/images/logo.png";
-import { usePathname } from "next/navigation"
+import { usePathname } from "next/navigation";
 
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar({ children }: { children: React.ReactNode }) {
-  // const router = useRouter(); // Get the current router instance
-  const currentPath = usePathname(); // Get the current pathname
   const navigation = [
-    { name: "Home", href: "/", current: currentPath==="/"?true:false},
-    { name: "Explore", href: "/explore", current: currentPath==="/explore"?true:false },
+    { name: "Home", href: "/", current: true },
+    { name: "Explore", href: "/explore", current: false },
   ];
   return (
     <Disclosure as="nav" className="border-default-bottom">
@@ -50,6 +48,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item, index) => {
+                      item.current = usePathname() === item.href;
                       return (
                         <Link
                           key={item.name}
@@ -60,8 +59,8 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
                               : "text-gray-300 hover:bg-gray-700 hover:text-white",
                             "rounded-md px-3 py-2 text-sm font-medium"
                           )}
-                          aria-current={item.current ? "page" : undefined}>
-
+                          aria-current={item.current ? "page" : undefined}
+                        >
                           {item.name}
                         </Link>
                       );
