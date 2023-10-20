@@ -1,14 +1,16 @@
 import React from 'react'
-import Testimonials from '../../../public/images/testimonial.jpg';
-import Image from 'next/image'
-const ProfileCard = () => {
-  return (
-    <div className="w-70 sm:w-80 h-70 sm:h-screen  px-4 sm:px-6 p-4 sm:py-6  text-center bg-gray-800 rounded-lg lg:mt-0 xl:px-10">
-    <div className="space-y-4 xl:space-y-6">
-        <Image className="mx-auto rounded-full h-20 sm:h-36 w-20 sm:w-36" src={Testimonials} alt="author avatar"/>
-        <div className="space-y-2">
-            <div className="flex justify-center items-center flex-col space-y-3 text-lg font-medium leading-6">
-                <h3 className="text-white">John Doe</h3>
+import {getServerSession } from 'next-auth';
+import testimonial from '../../../public/images/testimonial.jpg';
+const ProfileCard = async() => {
+    const session = await getServerSession();
+    console.log(session?.user.image,session?.user.name);
+    return (
+        <div className="w-70 sm:w-80 h-70 sm:h-screen  px-4 sm:px-6 p-4 sm:py-6  text-center bg-gray-800 rounded-lg md:mt-0 xl:px-10 mb-4">
+            <div className="space-y-4 xl:space-y-6">
+                <img className="mx-auto rounded-full h-20 sm:h-36 w-20 sm:w-36" src={session?.user?.image?.toString() || testimonial.src} alt={session?.user?.name || "user"}/>
+                <div className="space-y-2">
+                    <div className="flex justify-center items-center flex-col space-y-3 text-lg font-medium leading-6">
+                        <h3 className="text-white">{session?.user?.name || "user"}</h3>
                 <p className="text-indigo-300">Web Developer</p>
                 <div className="flex justify-center mt-5 space-x-5"><a href="#" target="_blank" rel="noopener noreferrer"
                         className="inline-block text-gray-400"><span className="sr-only">Twitter</span><svg

@@ -1,22 +1,25 @@
 import React from 'react'
 import ProgressBar from './progressbar'
 import DonutProgressBar from './donoughtChart'
-import logo from '../../../public/images/logo.png'
+import logodark from '../../../public/images/logodark.png'
 import Image from 'next/image'
-
-const stats = () => {
+import {getServerSession } from 'next-auth';
+const stats = async () => {
+  const session = await getServerSession();
+    const Total_Questions=200;
+    const questions_completed=100
   return (
     <div className='flex flex-col h-50 sm:h-fit mt-3 sm:mt-10 w-70 sm:w-80 bg-white sm:ml-10 rounded sm:shadow-md sm:shadow-slate-100 sm:z-10 p-4'>
         <div className="flex flex-row justify-between mb-3">
             <div className='flex flex-row h-fit w-fit'>
-            <Image src={logo} alt="logo" className='h-6 w-6' />
-            <div className='justify-start font-semibold' style={{color:"black"}} >username</div>
+            <Image src={logodark} alt="logo" className='h-6 w-12'/>
+            <div className='justify-start font-semibold ml-[-0.7rem]' style={{color:"black"}} >{session?.user.name}</div>
             </div>
             <div className='justify-end mr-4 'style={{color:"grey"}}>rank</div>
         </div>
-        <div className='flex flex-row gap-4 h-fit w-full justify-center items-center'>
+        <div className='flex flex-row gap-4 h-full w-full '>
         
-        <div className='flex justify-start items-start h-20 sm:h-32 w-20 sm:w-32 '><DonutProgressBar/></div>
+        <div className='flex justify-center items-center h-20 sm:h-32 w-20 sm:w-32 '><DonutProgressBar questions_completed={questions_completed} Total_Questions={Total_Questions}/></div>
         <div className='flex flex-col h-fit w-full mr-3'>
             <div className='flex flex-row justify-between mr-3'>
             <div className='justify-start font-semibold' style={{color:"black"}} >easy</div>
