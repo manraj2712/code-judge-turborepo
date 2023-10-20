@@ -70,7 +70,7 @@ export default function Features() {
                     setTab(1);
                   }}
                 >
-                  <div>
+                  <div className="cursor-pointer">
                     <div className="font-bold leading-snug tracking-tight mb-1 text-black text-base lg:text-xl">
                       Effortless Coding Practice
                     </div>
@@ -100,7 +100,7 @@ export default function Features() {
                     setTab(2);
                   }}
                 >
-                  <div>
+                  <div className="cursor-pointer">
                     <div className="font-bold leading-snug tracking-tight mb-1 text-black text-base lg:text-xl">
                       Instant Code Evaluation
                     </div>
@@ -133,7 +133,7 @@ export default function Features() {
                     setTab(3);
                   }}
                 >
-                  <div>
+                  <div className="cursor-pointer">
                     <div className="font-bold leading-snug tracking-tight mb-1 text-black text-base lg:text-xl">
                       Secure Code Testing
                     </div>
