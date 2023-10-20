@@ -4,7 +4,6 @@ import { Menu, Transition } from "@headlessui/react";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import Link from "next/link";
 const navigation = [
   { name: "Home", href: "#", current: true },
   { name: "Team", href: "#", current: false },
