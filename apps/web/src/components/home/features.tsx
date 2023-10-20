@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Transition } from "@headlessui/react";
 import Image from "next/image";
 import FeaturesBg from "@/../public/images/features-bg-2.png";
-import "./styles.css"
+import "./styles.css";
 
 export default function Features() {
   const [tab, setTab] = useState<number>(1);
@@ -49,23 +49,22 @@ export default function Features() {
               data-aos="fade-right"
             >
               <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
-                <h3 className="h3 mb-2 lg:mb-3 font-bold text-black text-lg sm:text-xl lg:text-2xl">
+                <h3 className="mb-2 text-xl font-extrabold text-black lg:mb-3 lg:text-2xl">
                   Unlock a World of Possibilities
                 </h3>
-                <p className="text-xl text-gray-600">
+                <p className="text-sm md:text-base text-gray-600">
                   Explore the key elements that make our platform an invaluable
                   resource for aspiring programmers.
                 </p>
               </div>
               {/* Tabs buttons */}
               <div className="mb-8 md:mb-0">
-                <a
+                <div
                   className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${
                     tab !== 1
                       ? "bg-white shadow-md border-gray-200 hover:shadow-lg"
                       : "bg-gray-200 border-transparent"
                   }`}
-                  href="#0"
                   onClick={(e) => {
                     e.preventDefault();
                     setTab(1);
@@ -75,7 +74,7 @@ export default function Features() {
                     <div className="font-bold leading-snug tracking-tight mb-1 text-black text-base lg:text-xl">
                       Effortless Coding Practice
                     </div>
-                    <div className="text-gray-600">
+                    <div className="text-xs sm:text-sm text-gray-600">
                       Sharpen your coding skills with an extensive library of
                       problems and real-time testing.
                     </div>
@@ -89,14 +88,13 @@ export default function Features() {
                       <path d="M11.953 4.29a.5.5 0 00-.454-.292H6.14L6.984.62A.5.5 0 006.12.173l-6 7a.5.5 0 00.379.825h5.359l-.844 3.38a.5.5 0 00.864.445l6-7a.5.5 0 00.075-.534z" />
                     </svg>
                   </div>
-                </a>
-                <a
+                </div>
+                <div
                   className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${
                     tab !== 2
                       ? "bg-white shadow-md border-gray-200 hover:shadow-lg"
                       : "bg-gray-200 border-transparent"
                   }`}
-                  href="#0"
                   onClick={(e) => {
                     e.preventDefault();
                     setTab(2);
@@ -106,7 +104,7 @@ export default function Features() {
                     <div className="font-bold leading-snug tracking-tight mb-1 text-black text-base lg:text-xl">
                       Instant Code Evaluation
                     </div>
-                    <div className="text-gray-600">
+                    <div className="text-xs sm:text-sm text-gray-600">
                       Know if your code passes predefined test cases within
                       seconds, helping you learn and improve quickly.
                     </div>
@@ -123,14 +121,13 @@ export default function Features() {
                       />
                     </svg>
                   </div>
-                </a>
-                <a
+                </div>
+                <div
                   className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${
                     tab !== 3
                       ? "bg-white shadow-md border-gray-200 hover:shadow-lg"
                       : "bg-gray-200 border-transparent"
                   }`}
-                  href="#0"
                   onClick={(e) => {
                     e.preventDefault();
                     setTab(3);
@@ -140,7 +137,7 @@ export default function Features() {
                     <div className="font-bold leading-snug tracking-tight mb-1 text-black text-base lg:text-xl">
                       Secure Code Testing
                     </div>
-                    <div className="text-gray-600">
+                    <div className="text-xs sm:text-sm text-gray-600">
                       Take collaboration to the next level with security and
                       administrative features built for teams.
                     </div>
@@ -158,7 +155,7 @@ export default function Features() {
                       />
                     </svg>
                   </div>
-                </a>
+                </div>
               </div>
             </div>
 
