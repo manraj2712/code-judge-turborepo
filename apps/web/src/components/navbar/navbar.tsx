@@ -81,7 +81,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
-                  as="a"
+                  as={Link}
                   href={item.href}
                   className={classNames(
                     item.current
