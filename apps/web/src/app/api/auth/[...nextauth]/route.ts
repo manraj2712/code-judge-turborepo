@@ -18,6 +18,9 @@ declare module "next-auth" {
   // }
 }
 const handler = NextAuth({
+  pages: {
+    signIn: "/signin",
+  },
   theme: {
     colorScheme: "dark",
   },
