@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "dotenv -e .env -- turbo run build",
-    "dev:dx": "docker-compose up -d && dotenv -e .env.local -- turbo run dev",
+    "dx": "docker-compose up -d && dotenv -e .env.local -- turbo run dev",
     "dev": "dotenv -e .env.local -- turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
