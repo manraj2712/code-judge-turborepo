@@ -1,11 +1,14 @@
 "use client";
 import VideoThumb from "@/../public/images/hero-image.png";
 import ModalVideo from "@/components/home/modal-video";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 import { useRouter } from "next/navigation";
 
 export default function Hero() {
   const router = useRouter();
+  const { data } = useSession();
   return (
     <section className="relative">
       {/* Illustration behind hero content */}
@@ -75,8 +78,13 @@ export default function Hero() {
                 >
                   Explore
                 </button>
-                <button onClick={() => {}} className="cta-button-gray">
-                  Sign up
+                <button
+                  onClick={() => {
+                    router.push(data?.user ? "/profile" : "/signin");
+                  }}
+                  className="cta-button-gray"
+                >
+                  {data?.user ? "Profile" : "Sign up"}
                 </button>
               </div>
             </div>

@@ -21,15 +21,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <RecoilRootLayout>
-          <NextAuthProvider>
-            <Navbar>
-              <NavbarProfile />
-            </Navbar>
-            {children}
-            <FooterProvider />
-          </NextAuthProvider>
-        </RecoilRootLayout>
+        <div className="min-h-screen flex flex-col">
+          <RecoilRootLayout>
+            <NextAuthProvider>
+              <Navbar>
+                <NavbarProfile />
+              </Navbar>
+              <div className="flex-grow">{children}</div>
+              <FooterProvider />
+            </NextAuthProvider>
+          </RecoilRootLayout>
+        </div>
       </body>
     </html>
   );
