@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "dotenv -- run build",
+    "build": "dotenv -- turbo run build",
     "dx": "docker-compose up -d && dotenv -- turbo run dev",
     "dev": "dotenv -- turbo run dev",
     "lint": "turbo run lint",
