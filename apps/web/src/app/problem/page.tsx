@@ -104,7 +104,7 @@ export default function ProblemSubmittionScreen() {
           solutionClassCode={userCode}
         ></SubmissionBottomSheet>
         <div
-          className="h-56 mt-10 mb-20"
+          className="h-96 mt-10 mb-20"
           style={{
             width: "inherit",
           }}
