@@ -4,6 +4,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 const navigation = [
   { name: "Home", href: "#", current: true },
   { name: "Team", href: "#", current: false },
@@ -66,18 +67,17 @@ const NavbarProfileMenu = ({ session }: { session: Session }) => {
           </Menu.Item>
           <Menu.Item>
             {({ active }) => (
-              <a
+              <div
                 onClick={() => {
                   signOut();
                 }}
-                href="#"
                 className={classNames(
                   active ? "bg-gray-100" : "",
                   "block px-4 py-2 text-sm text-gray-700"
                 )}
               >
                 Sign out
-              </a>
+              </div>
             )}
           </Menu.Item>
         </Menu.Items>
