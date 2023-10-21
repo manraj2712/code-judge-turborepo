@@ -14,9 +14,8 @@ const Submissiontable = () => {
         setSelectedTab(tab);
     };
     return (
-        <div className='hidden md:flex rounded h-3/6 bg-white m-10 p-5 mb-3 w-[900px] '>
-            <div className='flex flex-col gap-8 w-full'>
-                <div className="justify-start space-x-4 w-full">
+            <div className='flex flex-col w-full h-full'>
+                <div className="justify-start space-x-4 w-full m-5 ">
                     {
                         navigation.map((item) => {
                             return (
@@ -25,18 +24,12 @@ const Submissiontable = () => {
                         }
                         )}
                 </div>
-                <div className="text-gray-700 overflow-scroll ">
-                    {selectedTab === 'Recent AC' && <div>{<ProblemsList/>}</div>}
+                <div className="text-neutral-200 m-5 h-full overflow-auto ">
+                    {selectedTab === 'Recent AC' && <ProblemsList/>}
                     {selectedTab === 'Solutions' && <div>Content for Tab 2</div>}
                     {selectedTab === 'Discuss' && <div>Content for Tab 3</div>}
                 </div>
             </div>
-
-
-
-
-
-        </div>
     )
 }
 

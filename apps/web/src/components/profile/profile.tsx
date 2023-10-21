@@ -5,9 +5,9 @@ const ProfileCard = async() => {
     const session = await getServerSession();
     console.log(session?.user.image,session?.user.name);
     return (
-        <div className="w-70 sm:w-80 h-70 sm:h-screen  px-4 sm:px-6 py-4 sm:py-6  text-center bg-gray-800 rounded-lg md:mt-0 xl:px-10 mb-4">
+        <div className="h-full w-full text-center">
             <div className="space-y-4 xl:space-y-6">
-                <img className="mx-auto rounded-full h-20 sm:h-36 w-20 sm:w-36" src={session?.user?.image?.toString() || testimonial.src} alt={session?.user?.name || "user"}/>
+                <img className="mx-auto rounded-full h-20 w-20 " src={session?.user?.image?.toString() || testimonial.src} alt={session?.user?.name || "user"}/>
                 <div className="space-y-2">
                     <div className="flex justify-center items-center flex-col space-y-3 text-lg font-medium leading-6">
                         <h3 className="text-white">{session?.user?.name || "user"}</h3>
