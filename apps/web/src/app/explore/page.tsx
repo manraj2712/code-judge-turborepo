@@ -4,7 +4,6 @@ import FiltersSidebar from "@/components/explore/filters-sidebar";
 import ProblemsList from "@/components/explore/problems-list";
 
 export default function Sidebar() {
-export default function Sidebar() {
   return (
     <div className="flex mb-20">
       <FiltersSidebar />
