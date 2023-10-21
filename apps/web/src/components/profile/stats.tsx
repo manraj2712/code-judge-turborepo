@@ -18,10 +18,10 @@ const stats = async () => {
         </div>
         <div className='justify-end mr-4 ' style={{ color: "grey" }}>rank</div>
       </div>
-      <div className='flex flex-row gap-2 sm:gap-4 h-full w-full '>
+      <div className='flex flex-row gap-4 h-full w-full '>
 
         <div className='flex justify-center items-center w-full h-fit donut'><DonutProgressBar questions_completed={questions_completed} Total_Questions={Total_Questions} /></div>
-        <div className='flex flex-col h-fit w-full '>
+        <div className='flex flex-col h-fit w-full mr-3'>
           <div className='flex flex-row justify-between mr-3'>
             <div className='justify-start font-semibold' style={{ color: "black" }} >easy</div>
             <div className='justify-end font-normal' style={{ color: "black" }} >50/100</div>
