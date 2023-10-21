@@ -22,7 +22,7 @@ const DonutProgressBar = ({Total_Questions,questions_completed}:any) => {
           ],
         },
         options: {
-          cutoutPercentage: 80,
+          cutoutPercentage: 90,
           responsive: true,
           maintainAspectRatio: false,
           tooltips: { enabled: false },
@@ -32,12 +32,13 @@ const DonutProgressBar = ({Total_Questions,questions_completed}:any) => {
   }, [progress]);
 
   return (
-    <div className="relative w-20 h-20" style={{ maxWidth: "300px" }}>
+    <div className="relative h-32 w-[6rem]" style={{ maxWidth: "8rem" }}>
       <canvas ref={chartRef} />
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <div className="text-xl font-semibold" style={{ color: "#2563EB" }}>
+      <div className="absolute inset-0 flex flex-col items-center justify-center ">
+        <div className="text-xl font-semibold mt-2" style={{ color: "#2563EB" }}>
           {questions_completed}
         </div>
+        <div className="text-neutral-400">solved</div>
       </div>
     </div>
   );
