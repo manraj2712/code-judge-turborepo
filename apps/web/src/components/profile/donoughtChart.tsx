@@ -17,7 +17,7 @@ const DonutProgressBar = ({Total_Questions,questions_completed}:any) => {
           datasets: [
             {
               data: [progress, 100 - progress],
-              backgroundColor: ["#2563EB", "#D1D5DB"],
+              backgroundColor: ["blue", "white"],
             },
           ],
         },
@@ -35,10 +35,10 @@ const DonutProgressBar = ({Total_Questions,questions_completed}:any) => {
     <div className="relative h-32 w-[6rem]" style={{ maxWidth: "8rem" }}>
       <canvas ref={chartRef} />
       <div className="absolute inset-0 flex flex-col items-center justify-center ">
-        <div className="text-xl font-semibold mt-2" style={{ color: "#2563EB" }}>
+        <div className="text-xl font-semibold mt-2 text-neutral-200">
           {questions_completed}
         </div>
-        <div className="text-neutral-400">solved</div>
+        <div className="text-neutral-400 text-sm">solved</div>
       </div>
     </div>
   );

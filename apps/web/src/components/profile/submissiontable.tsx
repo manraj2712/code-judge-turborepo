@@ -19,12 +19,12 @@ const Submissiontable = () => {
                     {
                         navigation.map((item) => {
                             return (
-                                <button className={selectedTab === item.name ? "bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" : " rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-700 hover:text-white"} onClick={() => handleTabClick(item.name)}>{item.name}</button>
+                                <button className={selectedTab === item.name ? "bg-neutral-700/80 text-white rounded-md px-3 py-2 text-sm font-medium" : " rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-600 hover:text-white"} onClick={() => handleTabClick(item.name)}>{item.name}</button>
                             );
                         }
                         )}
                 </div>
-                <div className="text-neutral-200 m-5 h-full overflow-auto ">
+                <div className="text-neutral-200 m-5 h-full">
                     {selectedTab === 'Recent AC' && <ProblemsList/>}
                     {selectedTab === 'Solutions' && <div>Content for Tab 2</div>}
                     {selectedTab === 'Discuss' && <div>Content for Tab 3</div>}

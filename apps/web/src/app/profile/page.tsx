@@ -16,10 +16,10 @@ const Profile = async () => {
         </div>
 
         <div className='flex flex-col w-full '>
-          <div className='h-1/3 sm:h-fit mt-3 sm:mt-10 w-70 sm:w-80 bg-neutral-900 sm:ml-10 rounded sm:shadow-md sm:shadow-neutral-600 sm:z-10 p-4'>
+          <div className='h-1/3 sm:h-fit mt-3 sm:mt-10 w-70 sm:w-96 bg-neutral-900 sm:ml-10 rounded p-4'>
             <Stats />
           </div>
-          <div className='hidden md:flex rounded h-3/6 bg-neutral-900 m-10 mb-3 ' >
+          <div className='hidden md:flex rounded h-full bg-neutral-900 m-10 mb-3 ' >
             <Submissiontable />
           </div>
 
