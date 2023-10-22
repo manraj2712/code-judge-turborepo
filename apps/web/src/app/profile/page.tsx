@@ -11,7 +11,7 @@ const Profile = async () => {
 
     session ? (
       <div className="flex flex-col mx-2 sm:flex-row mt-2 bg-black " >
-        <div className='w-70 sm:w-80 bg-neutral-900 rounded-lg md:mt-0 xl:px-10 mb-4 h-70 sm:h-screen  px-4 sm:px-6 py-4 sm:py-6 '>
+        <div className='w-70 sm:w-80 bg-neutral-900 rounded-lg md:mt-0 xl:px-10 mb-4 h-full  px-4 sm:px-6 py-4 sm:py-6 '>
           <ProfileCard />
         </div>
 

@@ -25,17 +25,17 @@ const stats = async () => {
             <div className='justify-start font-medium text-xs text-neutral-200'  >Easy</div>
             <div className='justify-end font-semibold text-xs text-neutral-200'  >50/100</div>
           </div>
-          <ProgressBar Total_Questions={100} questions_completed={50} color={"green"} />
+          <ProgressBar Total_Questions={100} questions_completed={50} color={"#29A01A"} bgcolor={"#294d35"} />
           <div className='flex flex-row justify-between mr-3'>
             <div className='justify-start font-medium text-xs text-neutral-200' >Medium</div>
             <div className='justify-end font-semibold text-xs text-neutral-200' >20/40</div>
           </div>
-          <ProgressBar Total_Questions={40} questions_completed={20} color={"yellow"} />
+          <ProgressBar Total_Questions={40} questions_completed={20} color={"#B99A16"} bgcolor={"#5e4e25"} />
           <div className='flex flex-row justify-between mr-3'>
             <div className='justify-start font-medium text-xs text-neutral-200'  >Hard</div>
             <div className='justify-end font-semibold text-xs text-neutral-200'>30/50</div>
           </div>
-          <ProgressBar Total_Questions={50} questions_completed={30} color={"red"} />
+          <ProgressBar Total_Questions={50} questions_completed={30} color={"#B91616"} bgcolor={"#5a302f"}/>
         </div>
       </div>
     </div>

@@ -3,9 +3,8 @@ import {getServerSession } from 'next-auth';
 import testimonial from '../../../public/images/testimonial.jpg';
 const ProfileCard = async() => {
     const session = await getServerSession();
-    console.log(session?.user.image,session?.user.name);
     return (
-        <div className="h-full w-full text-center">
+        <div className="h-full sm:pb-60 w-full text-center">
             <div className="space-y-4 xl:space-y-6">
                 <img className="mx-auto rounded-full h-20 w-20 " src={session?.user?.image?.toString() || testimonial.src} alt={session?.user?.name || "user"}/>
                 <div className="space-y-2">
