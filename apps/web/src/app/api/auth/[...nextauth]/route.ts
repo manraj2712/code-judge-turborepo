@@ -65,7 +65,7 @@ const handler = NextAuth({
     signIn: async ({ user, account, profile, email, credentials }) => {
       if (account?.provider === "google") {
         try {
-          await prisma.user.upsert({
+          const dbuser = await prisma.user.upsert({
             where: {
               email: user.email!,
             },
@@ -76,6 +76,7 @@ const handler = NextAuth({
               password: Math.random().toString(36).slice(-8),
             },
           });
+          console.log({ dbuser });
         } catch (e) {
           console.log(e);
           return false;
@@ -83,15 +84,6 @@ const handler = NextAuth({
       }
       return true;
     },
-    // session: ({ session, token }) => {
-    //   return {
-    //     ...session,
-    //     user: {
-    //       ...session.user,
-    //       id: token.id,
-    //     },
-    //   };
-    // },
   },
   secret: process.env.SECRET!,
   jwt: {

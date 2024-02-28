@@ -11,8 +11,65 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
+  id          String       @id @default(uuid())
+  name        String
+  email       String       @unique
+  password    String
+  problems    Problem[]
+  submissions Submission[]
+}
+
+model Problem {
+  id               String       @id @default(uuid())
+  title            String
+  description      String
+  difficulty       Difficulty
+  authorId         String
+  author           User         @relation(fields: [authorId], references: [id])
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  boilerplate      String
+  acceptanceRate   Float        @default(0)
+  totalSubmissions Int          @default(0)
+  submissions      Submission[]
+}
+
+model Submission {
+  id        String   @id @default(uuid())
+  problemId String
+  problem   Problem  @relation(fields: [problemId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  code      String
+  language  Language
+  status    Status   @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  output    String?
+  time      String?
+  memory    String?
+}
+
+enum Language {
+  CPP
+  C
+  JAVA
+  PYTHON
+}
+
+enum Status {
+  AC
+  WA
+  TLE
+  RTE
+  CE
+  MLE
+  RE
+  PENDING
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
 }

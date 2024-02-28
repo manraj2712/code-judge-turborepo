@@ -11,7 +11,7 @@ export default function EditorBottomBar() {
       }}
     >
       <button
-        className="bg-gray-500 hover:bg-gray-600 text-white font-medium py-[6px] px-4 rounded inline-flex items-center"
+        className="bg-gray-500 hover:bg-gray-600 text-white font-medium py-[3px] px-2 sm:py-[6px] sm:px-4  rounded inline-flex items-center"
         onClick={() => {
           setOpen(true);
         }}
@@ -19,7 +19,7 @@ export default function EditorBottomBar() {
         Compile and Run
       </button>
       <span style={{ width: "20px" }}></span>
-      <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-[6px] px-4 rounded">
+      <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-[3px] px-2 sm:py-[6px] sm:px-4 rounded">
         Submit
       </button>
     </div>

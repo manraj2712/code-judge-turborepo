@@ -1,3 +1,4 @@
+import { getDifficultyColor } from "@/constants";
 import { ProblemHeader } from "@/types/problem";
 
 export default function ProblemHeaderComponent({
@@ -11,28 +12,19 @@ export default function ProblemHeaderComponent({
 
       <div className="flex justify-between mb-5">
         <p
-          className={`${getColorByDifficulty(
-            header.difficulty
-          )} text-sm lg:text-base font-bold p-1`}
+          className={`${getDifficultyColor(
+            header.difficulty.toLowerCase()
+          )} text-sm lg:text-base font-bold p-1 first-letter:capitalize`}
         >
-          {header.difficulty}
+          {header.difficulty.toLowerCase()}
         </p>
 
         <p className=" text-sm lg:text-base p-1">
-          {`Acceptance: ${header.acceptancePercentage}%`}
+          {`Acceptance: ${header.acceptanceRate}%`}
         </p>
 
-        <p className=" text-sm lg:text-base p-1">{`Submissions: ${header.submissionsCount}`}</p>
+        <p className=" text-sm lg:text-base p-1">{`Submissions: ${header.totalSubmissions}`}</p>
       </div>
     </div>
   );
-}
-
-function getColorByDifficulty(difficulty: string): string {
-  switch (difficulty) {
-    case "hard":
-      return "text-red-500";
-    default:
-      return "text-green-500";
-  }
 }

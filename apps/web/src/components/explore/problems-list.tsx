@@ -1,4 +1,6 @@
+import { getDifficultyColor } from "@/constants";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import { prisma } from "@manraj2712/database";
 import Link from "next/link";
 
 const columns = [
@@ -8,80 +10,103 @@ const columns = [
   { id: "difficulty", label: "Difficulty" },
 ];
 
-const problems: Array<{
+// const problems: Array<{
+//   id: string;
+//   status: string;
+//   title: string;
+//   acceptance: string;
+//   difficulty: string;
+// }> = [
+//   {
+//     id: "1",
+//     status: "AC",
+//     title: "Two Sum",
+//     acceptance: "55%",
+//     difficulty: "Easy",
+//   },
+//   {
+//     id: "2",
+//     status: "WA",
+//     title: "Reverse Integer",
+//     acceptance: "42%",
+//     difficulty: "Easy",
+//   },
+//   {
+//     id: "3",
+//     status: "AC",
+//     title:
+//       "Longest Substring Without Repeating Characters this is a very long title to test the table width and overflow behavior of the table cell and the table itself ",
+//     acceptance: "66%",
+//     difficulty: "Medium",
+//   },
+//   {
+//     id: "4",
+//     status: "TLE",
+//     title: "Add Two Numbers",
+//     acceptance: "72%",
+//     difficulty: "Medium",
+//   },
+//   {
+//     id: "5",
+//     status: "RE",
+//     title: "Merge Two Sorted Lists",
+//     acceptance: "60%",
+//     difficulty: "Easy",
+//   },
+//   {
+//     id: "6",
+//     status: "AC",
+//     title: "Palindrome Number",
+//     acceptance: "45%",
+//     difficulty: "Easy",
+//   },
+//   {
+//     id: "7",
+//     status: "AC",
+//     title: "Valid Parentheses",
+//     acceptance: "78%",
+//     difficulty: "Easy",
+//   },
+//   {
+//     id: "8",
+//     status: "WA",
+//     title: "Container With Most Water",
+//     acceptance: "50%",
+//     difficulty: "Medium",
+//   },
+//   {
+//     id: "9",
+//     status: "TLE",
+//     title: "Climbing Stairs",
+//     acceptance: "70%",
+//     difficulty: "Easy",
+//   },
+// ];
+
+
+type ProblemListItem = {
   id: string;
   status: string;
   title: string;
   acceptance: string;
   difficulty: string;
-}> = [
-  {
-    id: "1",
-    status: "AC",
-    title: "Two Sum",
-    acceptance: "55%",
-    difficulty: "Easy",
-  },
-  {
-    id: "2",
-    status: "WA",
-    title: "Reverse Integer",
-    acceptance: "42%",
-    difficulty: "Easy",
-  },
-  {
-    id: "3",
-    status: "AC",
-    title:
-      "Longest Substring Without Repeating Characters this is a very long title to test the table width and overflow behavior of the table cell and the table itself ",
-    acceptance: "66%",
-    difficulty: "Medium",
-  },
-  {
-    id: "4",
-    status: "TLE",
-    title: "Add Two Numbers",
-    acceptance: "72%",
-    difficulty: "Medium",
-  },
-  {
-    id: "5",
-    status: "RE",
-    title: "Merge Two Sorted Lists",
-    acceptance: "60%",
-    difficulty: "Easy",
-  },
-  {
-    id: "6",
-    status: "AC",
-    title: "Palindrome Number",
-    acceptance: "45%",
-    difficulty: "Easy",
-  },
-  {
-    id: "7",
-    status: "AC",
-    title: "Valid Parentheses",
-    acceptance: "78%",
-    difficulty: "Easy",
-  },
-  {
-    id: "8",
-    status: "WA",
-    title: "Container With Most Water",
-    acceptance: "50%",
-    difficulty: "Medium",
-  },
-  {
-    id: "9",
-    status: "TLE",
-    title: "Climbing Stairs",
-    acceptance: "70%",
-    difficulty: "Easy",
-  },
-];
+}
 
-const ProblemsList = () => {
+const ProblemsList = async () => {
+
+  const problems: ProblemListItem[] = [];
+  const res = await prisma.problem.findMany({ select: { id: true, title: true, difficulty: true, acceptanceRate: true, totalSubmissions: true }, take: 20, skip: 0, });
+
+  res.forEach((problem) => {
+    problems.push({
+      id: problem.id,
+      status: "AC",
+      title: problem.title,
+      acceptance: problem.acceptanceRate < 1 ? `${problem.acceptanceRate.toFixed(0)}%` : "-",
+      difficulty: problem.difficulty,
+    })
+  })
+
   return (
     <div className="flex flex-col w-full px-3">
       <div className="">
@@ -93,17 +118,14 @@ const ProblemsList = () => {
                   {columns.map((column, index) => (
                     <th
                       key={column.id}
-                      className={`lg:px-6 py-3 ${
-                        index === columns.length - 1
-                          ? "text-center"
-                          : "text-left"
-                      } ${
-                        ["acceptance", "status"].includes(column.id)
+                      className={`lg:px-6 py-3 ${index === columns.length - 1
+                        ? "text-center"
+                        : "text-left"
+                        } ${["acceptance", "status"].includes(column.id)
                           ? "hidden lg:table-cell"
                           : ""
-                      } ${
-                        column.id == "title" ? "w-[70%]" : "w-auto"
-                      } text-base font-medium text-gray-500 dark:text-gray-200`}
+                        } ${column.id == "title" ? "w-[70%]" : "w-auto"
+                        } text-base font-medium text-gray-500 dark:text-gray-200`}
                     >
                       {column.label}
                     </th>
@@ -128,18 +150,18 @@ const ProblemsList = () => {
                     </td>
 
                     <td className="w-[70%] lg:w-auto hide-multi-line px-2 lg:px-6 py-4 hover:cursor-pointer hover:text-blue-700 text-base">
-                      <Link href="/problem">
+                      <Link href={`/problem/${problem.id}`}>
                         {problem.title.length > 50
                           ? problem.title.slice(0, 47) + "..."
                           : problem.title}
                       </Link>
                     </td>
                     <td
-                      className={`px-6 py-4 text-center text-base ${getDifficultyColor(
-                        problem.difficulty
+                      className={`px-6 py-4 text-center text-base first-letter:capitalize ${getDifficultyColor(
+                        problem.difficulty.toLowerCase()
                       )}`}
                     >
-                      {problem.difficulty}
+                      {problem.difficulty.toLowerCase()}
                     </td>
                   </tr>
                 ))}
@@ -150,19 +172,6 @@ const ProblemsList = () => {
       </div>
     </div>
   );
-};
-
-const getDifficultyColor = (difficulty: string) => {
-  switch (difficulty) {
-    case "Easy":
-      return "text-green-500";
-    case "Medium":
-      return "text-yellow-500";
-    case "Hard":
-      return "text-red-500";
-    default:
-      return "text-green-500";
-  }
 };
 
 export default ProblemsList;

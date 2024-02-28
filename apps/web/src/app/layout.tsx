@@ -27,7 +27,7 @@ export default function RootLayout({
               <Navbar>
                 <NavbarProfile />
               </Navbar>
-              <div className="flex-grow">{children}</div>
+              <div className="flex-grow flex flex-col">{children}</div>
               <FooterProvider />
             </NextAuthProvider>
           </RecoilRootLayout>

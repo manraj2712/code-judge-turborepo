@@ -2,8 +2,19 @@
 import { usePathname } from "next/navigation";
 import Footer from "./footer";
 
-const removeFooterFromPaths = ["/problem","/signin"];
+const removeFooterFromPaths = ["/problem", "/signin"];
 
 export default function FooterProvider() {
-  return <>{!removeFooterFromPaths.includes(usePathname()) && <Footer />}</>;
+
+  const pathname = usePathname();
+
+  return (
+    <>
+      {removeFooterFromPaths.some(path => pathname.startsWith(path)) ? (
+        <></>
+      ) : (
+        <Footer />
+      )}
+    </>
+  );
 }

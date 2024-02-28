@@ -3,38 +3,62 @@ import { bottomSheetState } from "@/store/atoms/problem";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import ProcessingSpinner from "../utils/processing_spinner";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { Language } from "@manraj2712/database";
+import { useSession } from "next-auth/react";
 
-async function submitCode(code: string) {
-  const response = await axios.post("http://localhost:3000/api/submit-code", {
-    code: code,
+
+async function submitCode({
+  code,
+  problemId,
+  language,
+}: {
+  code: string;
+  problemId: string;
+  language: Language;
+}) {
+  const response = await fetch("/api/submit", {
+    method: "POST",
+    body: JSON.stringify({ code, problemId, language }),
   });
-  return response;
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return response.json();
 }
+
 
 export default function SubmissionBottomSheet({
   solutionClassCode,
+  problemId,
+  language,
 }: {
   solutionClassCode: string;
+  problemId: string;
+  language: Language;
 }) {
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState("");
   const open = useRecoilValue(bottomSheetState);
 
+  const session = useSession();
+
   useEffect(() => {
     if (!open) return;
     setLoading(true);
-    submitCode(solutionClassCode)
-      .then((resp) => {
-        console.log(resp.data.output);
-        setOutput(resp.data.output);
-      })
-      .catch((err) => {
-        setOutput(err.response.data.error.toString());
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    if (!session.data?.expires) {
+      console.log("no session");
+      setLoading(false);
+      return;
+    }
+    submitCode({ code: solutionClassCode, language, problemId }).then((res) => {
+      console.log(res);
+    }).catch(e => {
+      console.log(e);
+    }).finally(() => {
+      setLoading(false);
+    });
   }, [open]);
 
   return (
@@ -42,16 +66,10 @@ export default function SubmissionBottomSheet({
       {open && (
         <div
           style={{
-            padding: "10px",
-            justifyContent: "start",
-            height: "calc(100vh - 4rem)",
-            width: "99%",
             backgroundColor: "rgb(48 47 47)",
             borderRadius: "1rem 1rem 0 0",
-            position: "absolute",
-            bottom: "0",
-            zIndex: 100,
           }}
+          className="h-96 absolute w-[calc(85%)] sm:w-[calc(91%)] p-3 z-20 bottom-0 lg:h-[calc(100vh-64px)]  lg:w-[calc(99%)] lg:px-0 "
         >
           <SubmitSheetHeader />
           {loading ? <ProcessingSpinner /> : <pre>{output}</pre>}

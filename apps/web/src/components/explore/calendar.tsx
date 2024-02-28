@@ -1,3 +1,4 @@
+"use client";
 import React, { FormEvent, useState } from "react";
 import dayjs from "dayjs";
 const dateToday = dayjs();
