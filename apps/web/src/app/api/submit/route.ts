@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { prisma } from "@manraj2712/database";
+import { sqsclient } from "@manraj2712/aws-services";
 
 export async function POST(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.SECRET });
@@ -36,6 +37,10 @@ export async function POST(req: NextRequest) {
       },
       language: language,
     },
+  });
+
+  await sqsclient.sendMessage({
+    message: submission.id,
   });
 
   return NextResponse.json(submission, { status: 201 });

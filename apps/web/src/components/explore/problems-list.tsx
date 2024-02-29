@@ -83,30 +83,37 @@ const columns = [
 //   },
 // ];
 
-
 type ProblemListItem = {
   id: string;
   status: string;
   title: string;
   acceptance: string;
   difficulty: string;
-}
+};
 
-const ProblemsList = async () => {
-
+const fetchProblemList = async () => {
+  const res = await fetch("http://localhost:3000/api/problems", {
+    method: "GET",
+  });
+  const resJson = await res.json();
   const problems: ProblemListItem[] = [];
-  const res = await prisma.problem.findMany({ select: { id: true, title: true, difficulty: true, acceptanceRate: true, totalSubmissions: true }, take: 20, skip: 0, });
-
-  res.forEach((problem) => {
+  resJson.forEach((problem: any) => {
     problems.push({
       id: problem.id,
       status: "AC",
       title: problem.title,
-      acceptance: problem.acceptanceRate < 1 ? `${problem.acceptanceRate.toFixed(0)}%` : "-",
+      acceptance:
+        problem.acceptanceRate < 1
+          ? `${problem.acceptanceRate.toFixed(0)}%`
+          : "-",
       difficulty: problem.difficulty,
-    })
-  })
+    });
+  });
+  return problems;
+};
 
+const ProblemsList = async () => {
+  const problems = await fetchProblemList();
   return (
     <div className="flex flex-col w-full px-3">
       <div className="">
@@ -118,14 +125,17 @@ const ProblemsList = async () => {
                   {columns.map((column, index) => (
                     <th
                       key={column.id}
-                      className={`lg:px-6 py-3 ${index === columns.length - 1
-                        ? "text-center"
-                        : "text-left"
-                        } ${["acceptance", "status"].includes(column.id)
+                      className={`lg:px-6 py-3 ${
+                        index === columns.length - 1
+                          ? "text-center"
+                          : "text-left"
+                      } ${
+                        ["acceptance", "status"].includes(column.id)
                           ? "hidden lg:table-cell"
                           : ""
-                        } ${column.id == "title" ? "w-[70%]" : "w-auto"
-                        } text-base font-medium text-gray-500 dark:text-gray-200`}
+                      } ${
+                        column.id == "title" ? "w-[70%]" : "w-auto"
+                      } text-base font-medium text-gray-500 dark:text-gray-200`}
                     >
                       {column.label}
                     </th>

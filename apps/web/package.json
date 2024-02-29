@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@manraj2712/database": "*",
+    "@manraj2712/aws-services": "*",
     "@monaco-editor/react": "^4.5.2",
     "@types/node": "20.6.1",
     "@types/react": "18.2.28",
