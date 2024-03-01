@@ -76,7 +76,6 @@ const handler = NextAuth({
               password: Math.random().toString(36).slice(-8),
             },
           });
-          console.log({ dbuser });
         } catch (e) {
           console.log(e);
           return false;

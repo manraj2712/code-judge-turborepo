@@ -1,6 +1,5 @@
 import { getDifficultyColor } from "@/constants";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
-import { prisma } from "@manraj2712/database";
 import Link from "next/link";
 
 const columns = [
@@ -92,7 +91,8 @@ type ProblemListItem = {
 };
 
 const fetchProblemList = async () => {
-  const res = await fetch("http://localhost:3000/api/problems", {
+  const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/problems`;
+  const res = await fetch(url, {
     method: "GET",
   });
   const resJson = await res.json();

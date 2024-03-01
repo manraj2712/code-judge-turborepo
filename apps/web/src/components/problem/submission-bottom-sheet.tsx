@@ -1,66 +1,60 @@
 "use client";
-import { bottomSheetState } from "@/store/atoms/problem";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import {
+  bottomSheetLoadingState,
+  bottomSheetOpenState,
+  submissionIdState,
+  submissionOutputState,
+} from "@/store/atoms/problem";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import ProcessingSpinner from "../utils/processing_spinner";
-import { useEffect, useState } from "react";
-import { Language } from "@manraj2712/database";
-import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
-
-async function submitCode({
-  code,
-  problemId,
-  language,
+const fetchStatusLongPoll = async ({
+  submissionId,
+  setSubmissionOutput,
+  setLoading,
 }: {
-  code: string;
-  problemId: string;
-  language: Language;
-}) {
-  const response = await fetch("/api/submit", {
-    method: "POST",
-    body: JSON.stringify({ code, problemId, language }),
-  });
-
+  submissionId: string | null;
+  setSubmissionOutput: (output: string) => void;
+  setLoading: (loading: boolean) => void;
+}) => {
+  const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/submission-status?id=${submissionId}`;
+  if (!submissionId) return;
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error(await response.text());
   }
-
-  return response.json();
-}
-
-
-export default function SubmissionBottomSheet({
-  solutionClassCode,
-  problemId,
-  language,
-}: {
-  solutionClassCode: string;
-  problemId: string;
-  language: Language;
-}) {
-  const [loading, setLoading] = useState(false);
-  const [output, setOutput] = useState("");
-  const open = useRecoilValue(bottomSheetState);
-
-  const session = useSession();
+  const data = await response.json();
+  if (data.status === "PENDING") {
+    setTimeout(() => {
+      fetchStatusLongPoll({ submissionId, setSubmissionOutput, setLoading });
+    }, 5000);
+  } else {
+    setLoading(false);
+    setSubmissionOutput(data.output);
+  }
+};
+export default function SubmissionBottomSheet() {
+  const open = useRecoilValue(bottomSheetOpenState);
+  const loading = useRecoilValue(bottomSheetLoadingState);
+  const output = useRecoilValue(submissionOutputState);
+  const submissionId = useRecoilValue(submissionIdState);
+  const setSubmissionOutput = useSetRecoilState(submissionOutputState);
+  const setLoading = useSetRecoilState(bottomSheetLoadingState);
 
   useEffect(() => {
-    if (!open) return;
-    setLoading(true);
-    if (!session.data?.expires) {
-      console.log("no session");
-      setLoading(false);
-      return;
+    if (submissionId) {
+      fetchStatusLongPoll({
+        submissionId,
+        setSubmissionOutput: (output) => {
+          setSubmissionOutput(output);
+        },
+        setLoading: (loading) => {
+          setLoading(loading);
+        },
+      });
     }
-    submitCode({ code: solutionClassCode, language, problemId }).then((res) => {
-      console.log(res);
-    }).catch(e => {
-      console.log(e);
-    }).finally(() => {
-      setLoading(false);
-    });
-  }, [open]);
-
+  }, [submissionId]);
   return (
     <>
       {open && (
@@ -80,7 +74,7 @@ export default function SubmissionBottomSheet({
 }
 
 function SubmitSheetHeader() {
-  const setOpen = useSetRecoilState(bottomSheetState);
+  const setOpen = useSetRecoilState(bottomSheetOpenState);
   return (
     <div
       style={{

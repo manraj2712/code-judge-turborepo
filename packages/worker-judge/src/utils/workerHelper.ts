@@ -3,8 +3,8 @@ import { exec } from "child_process";
 import { finished } from "stream/promises";
 import { Readable } from "stream";
 import { ReadableStream } from "stream/web";
-import {joinPath, getImportsByLanguage, getUnixPath } from ".";
-import {s3client} from "@manraj2712/aws-services";
+import { joinPath, getImportsByLanguage, getUnixPath } from ".";
+import { s3client } from "@manraj2712/aws-services";
 
 type ExecutionFilePaths = {
   pathToMain: string;
@@ -82,8 +82,10 @@ async function generateExecutionFilePaths({
 
 async function executeDockerCommand({
   files,
+  submissionId,
 }: {
   files: ExecutionFilePaths;
+  submissionId: string;
 }): Promise<any> {
   const dockerCommand = `docker run --rm -v ${getUnixPath(
     files.pathToMain
@@ -93,13 +95,24 @@ async function executeDockerCommand({
     files.pathToOutput
   )}:/home/sandbox/output.txt -v ${getUnixPath(
     files.pathToInput
-  )}:/home/sandbox/input.txt:ro`;
+  )}:/home/sandbox/input.txt:ro cpp`;
+  const pathToMainExe = files.pathToMain.replace(".cpp", "");
+
+  const directoryPath = joinPath(
+    __dirname,
+    "..",
+    "/requests",
+    `/${submissionId}`
+  );
+
+  const normalCppCommand = `cd  ${directoryPath} && g++ -o main main.cpp && ${pathToMainExe}`;
 
   const startTime = new Date().getTime();
 
   return await new Promise((resolve, reject) => {
-    exec(dockerCommand, (err, stdout, stderr) => {
+    exec(normalCppCommand, (err, stdout, stderr) => {
       if (err) {
+        console.log({ err });
         const errorToSend = err.message
           .substring(err.message.indexOf("\n") + 1)
           .replace("main.cpp:", "");
@@ -111,9 +124,11 @@ async function executeDockerCommand({
       } else {
         const endTime = new Date().getTime();
         const output = fs.readFileSync(files.pathToOutput, "utf-8");
+        console.log({ output });
+        const firstWorkOfOutput = output.split(" ")[0];
         if (
-          output.split(" ")[0] !== "Success" ||
-          output.split(" ")[0] !== "Failed"
+          output &&
+          !["Success", "Failed"].includes(firstWorkOfOutput.trim())
         ) {
           reject({
             error: "Invalid user input",

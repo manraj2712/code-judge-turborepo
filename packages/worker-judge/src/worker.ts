@@ -8,7 +8,7 @@ export const processQueue = async () => {
     const response = await sqsclient.getMessage();
 
     if (!response || !response.Messages || !response.Messages[0]) {
-      console.log(`Nothing left to process`);
+      // console.log(`Nothing left to process`);
       setTimeout(resolve, 5000);
     } else {
       const timeout = setTimeout(() => {
@@ -30,6 +30,7 @@ const processResponse = async (message: Message) => {
 
     if (!submission) {
       console.log(`Submission with id ${submissionId} not found`);
+      sqsclient.deleteMessage({ receiptHandle: message.ReceiptHandle! });
       return;
     }
 
@@ -41,8 +42,12 @@ const processResponse = async (message: Message) => {
     });
 
     try {
-      const res = await executeDockerCommand({ files });
-      prisma.submission.update({
+      const res = await executeDockerCommand({
+        files,
+        submissionId: submissionId!,
+      });
+      console.log({ res });
+      const updatedPrisma = await prisma.submission.update({
         where: { id: submissionId },
         data: {
           status: Status.AC,
@@ -50,7 +55,7 @@ const processResponse = async (message: Message) => {
           time: res.timeToExecute,
         },
       });
-      sqsclient.deleteMessage({ receiptHandle: message.ReceiptHandle! });
+      await sqsclient.deleteMessage({ receiptHandle: message.ReceiptHandle! });
     } catch (e: any) {
       prisma.submission.update({
         where: { id: submissionId },
