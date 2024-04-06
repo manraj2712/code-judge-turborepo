@@ -6,6 +6,29 @@
   background-color: black;
 }
 
+h1 {
+  font-size: 2em;
+}
+h2 {
+  font-size: 1.5em;
+}
+h3 {
+  font-size: 1.17em;
+}
+h5 {
+  font-size: 0.83em;
+}
+h6 {
+  font-size: 0.75em;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bolder;
+}
 body {
   color: white;
   background: linear-gradient(
@@ -18,18 +41,25 @@ body {
 
 code {
   font-family: "Roboto Mono", monospace;
+  flex-wrap: wrap;
+  display: block;
   font-weight: 400;
   font-size: 14px;
+  background-color: rgb(66, 66, 66);
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .code_container {
+  display: block;
   background-color: rgb(66, 66, 66);
   padding: 10px 20px;
   border-radius: 5px;
   margin-top: 10px;
   margin-bottom: 20px;
 }
-
 .border-default {
   border-width: 0.3px;
   @apply border-neutral-600 border-opacity-70;
