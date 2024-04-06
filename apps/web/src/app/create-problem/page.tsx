@@ -14,18 +14,30 @@ const handleSubmit = async ({
   description: string;
   boilerplate: string;
 }) => {
-  const createdProblem = await axios.post("/api/problems", {
-    title,
-    difficulty: difficulty.toUpperCase(),
-    description,
-    boilerplate,
-  });
+  try {
+    const createdProblem = await axios.post("/api/problems", {
+      title,
+      difficulty: difficulty.toUpperCase(),
+      description,
+      boilerplate,
+    });
+    return {
+      success: true,
+      data: createdProblem.data,
+    };
+  } catch (e) {
+    return {
+      success: false,
+      error: e,
+    };
+  }
 };
 export default function CreateProblemPage() {
   const [probblemDesc, setProbblemDesc] = useState("");
   const [initCode, setInitCode] = useState("");
   const [title, setTitle] = useState("");
   const [difficulty, setDifficulty] = useState("Easy");
+  const [creatingProblem, setCreatingProblem] = useState(false);
   return (
     <div className="min-h-screen flex flex-col p-10">
       <div className="grid grid-cols-2 gap-x-3 my-5">
@@ -77,16 +89,28 @@ export default function CreateProblemPage() {
       </div>
       <button
         className="cta-button-primary mt-5"
-        onClick={() => {
-          handleSubmit({
+        onClick={async () => {
+          setCreatingProblem(true);
+          const response = await handleSubmit({
             title,
             difficulty,
             description: probblemDesc,
             boilerplate: initCode,
           });
+          setCreatingProblem(false);
+          if (response.success) {
+            // reset the form
+            setTitle("");
+            setDifficulty("Easy");
+            setProbblemDesc("");
+            setInitCode("");
+            alert("Problem created successfully");
+          } else if (response.error) {
+            alert("Failed to create problem");
+          }
         }}
       >
-        Submit
+        {creatingProblem ? "Creating Problem..." : "Create Problem"}
       </button>
     </div>
   );

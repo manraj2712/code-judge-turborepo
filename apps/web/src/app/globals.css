@@ -42,8 +42,9 @@ body {
 code {
   font-family: "Roboto Mono", monospace;
   flex-wrap: wrap;
-  display: block;
+  display: flex;
   font-weight: 400;
+  overflow: auto;
   font-size: 14px;
   background-color: rgb(66, 66, 66);
   padding: 10px 20px;
