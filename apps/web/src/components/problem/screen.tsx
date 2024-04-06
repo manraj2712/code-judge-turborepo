@@ -9,6 +9,7 @@ import SubmissionBottomSheet from "./submission-bottom-sheet";
 import { Problem } from "@/types/problem";
 import EditorBottomBar from "./editor-bottom-bar";
 import { Language } from "@manraj2712/database";
+import ReactMarkdown from "react-markdown";
 
 export default function ProblemSubmittionScreen({
   problem,
@@ -36,15 +37,9 @@ export default function ProblemSubmittionScreen({
                 <ProblemHeaderComponent
                   header={problem.header}
                 ></ProblemHeaderComponent>
-                <ProblemDescription
-                  description={problem.description}
-                ></ProblemDescription>
-                <ProblemDescription
-                  description={problem.description}
-                ></ProblemDescription>
-                <ProblemDescription
-                  description={problem.description}
-                ></ProblemDescription>
+                <ReactMarkdown className="mb-10">
+                  {problem.description}
+                </ReactMarkdown>
               </div>
               <SubmissionBottomSheet />
             </div>
