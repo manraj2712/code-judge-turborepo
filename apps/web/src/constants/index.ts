@@ -14,12 +14,12 @@ export const questionStatuses: Array<Filter> = [
 export const getDifficultyColor = (difficulty: string) => {
   switch (difficulty) {
     case "easy":
-      return "text-green-500";
+      return "rgb(34 197 94)";
     case "medium":
-      return "text-yellow-500";
+      return "rgb(234 179 8)";
     case "hard":
-      return "text-red-500";
+      return "rgb(225 29 72)";
     default:
-      return "text-green-500";
+      return "rgb(34 197 94)";
   }
 };

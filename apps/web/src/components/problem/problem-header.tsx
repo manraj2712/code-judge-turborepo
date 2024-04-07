@@ -12,9 +12,10 @@ export default function ProblemHeaderComponent({
 
       <div className="flex justify-between mb-5">
         <p
-          className={`${getDifficultyColor(
-            header.difficulty.toLowerCase()
-          )} text-sm lg:text-base font-bold p-1 first-letter:capitalize`}
+          className={`text-sm lg:text-base font-bold p-1 first-letter:capitalize`}
+          style={{
+            color: getDifficultyColor(header.difficulty.toLowerCase()),
+          }}
         >
           {header.difficulty.toLowerCase()}
         </p>

@@ -53,6 +53,9 @@ export default function CreateProblemPage() {
   const [creatingProblem, setCreatingProblem] = useState(false);
   return (
     <div className="flex flex-col p-10">
+      <h1 className="text-3xl font-bold mb-10">Create a Problem</h1>
+
+      {/* Problem Title and Difficulty */}
       <div className="grid grid-cols-2 gap-x-3 my-5">
         <input
           type="text"

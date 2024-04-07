@@ -94,9 +94,12 @@ const ProblemsList = async () => {
                       </Link>
                     </td>
                     <td
-                      className={`px-6 py-4 text-center text-base first-letter:capitalize ${getDifficultyColor(
-                        problem.difficulty.toLowerCase()
-                      )}`}
+                      className={`px-6 py-4 text-center text-base first-letter:capitalize`}
+                      style={{
+                        color: getDifficultyColor(
+                          problem.difficulty.toLowerCase()
+                        ),
+                      }}
                     >
                       {problem.difficulty.toLowerCase()}
                     </td>
