@@ -27,7 +27,9 @@ const fetchStatusLongPoll = async ({
   const data = await response.json();
   if (data.status === "PENDING") {
     setTimeout(() => {
-      fetchStatusLongPoll({ submissionId, setSubmissionOutput, setLoading });
+      if (data.status === "PENDING") {
+        fetchStatusLongPoll({ submissionId, setSubmissionOutput, setLoading });
+      }
     }, 5000);
   } else {
     setLoading(false);
@@ -66,7 +68,9 @@ export default function SubmissionBottomSheet() {
           className="h-96 absolute w-[calc(85%)] sm:w-[calc(91%)] p-3 z-20 bottom-0 lg:h-[calc(100vh-64px)]  lg:w-[calc(99%)] lg:px-0 "
         >
           <SubmitSheetHeader />
-          {loading ? <ProcessingSpinner /> : <pre>{output}</pre>}
+          <div className="p-5">
+            {loading ? <ProcessingSpinner /> : <pre>{output}</pre>}
+          </div>
         </div>
       )}
     </>
