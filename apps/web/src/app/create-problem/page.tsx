@@ -2,17 +2,24 @@
 import ReactMarkdown from "react-markdown";
 import { useState } from "react";
 import axios from "axios";
+import { Editor } from "@monaco-editor/react";
 
 const handleSubmit = async ({
   title,
   difficulty,
   description,
   boilerplate,
+  driverCode,
+  input,
+  expectedOutput,
 }: {
   title: string;
   difficulty: string;
   description: string;
   boilerplate: string;
+  driverCode: string;
+  input: string;
+  expectedOutput: string;
 }) => {
   try {
     const createdProblem = await axios.post("/api/problems", {
@@ -20,6 +27,9 @@ const handleSubmit = async ({
       difficulty: difficulty.toUpperCase(),
       description,
       boilerplate,
+      driverCode,
+      input,
+      expectedOutput,
     });
     return {
       success: true,
@@ -35,11 +45,14 @@ const handleSubmit = async ({
 export default function CreateProblemPage() {
   const [probblemDesc, setProbblemDesc] = useState("");
   const [initCode, setInitCode] = useState("");
+  const [driverCode, setDriverCode] = useState("");
   const [title, setTitle] = useState("");
+  const [expectedOutput, setExpectedOutput] = useState("");
+  const [input, setInput] = useState("");
   const [difficulty, setDifficulty] = useState("Easy");
   const [creatingProblem, setCreatingProblem] = useState(false);
   return (
-    <div className="min-h-screen flex flex-col p-10">
+    <div className="flex flex-col p-10">
       <div className="grid grid-cols-2 gap-x-3 my-5">
         <input
           type="text"
@@ -57,36 +70,90 @@ export default function CreateProblemPage() {
           <option>HARD</option>
         </select>
       </div>
-      <h3>Initial Code</h3>
-      <div className="grid h-32 grid-cols-2 text-white border-white border rounded-xl">
-        <div>
-          <textarea
-            value={initCode}
-            onChange={(e) => setInitCode(e.target.value)}
-            className="w-full h-full bg-black p-5"
-          ></textarea>
+
+      {/* Problem Description */}
+      <div className="mt-10 flex flex-col gap-2">
+        <div className="mt-10 grid grid-cols-2">
+          <h3>Problem Description</h3>
+          <h3>Preview</h3>
         </div>
-        <div>
-          <div className="h-full w-full border-white border p-5">
-            <ReactMarkdown>{initCode}</ReactMarkdown>
+        <div className="min-h-[36rem] grid grid-cols-2 text-white border-white border rounded-xl">
+          <div className="h-full">
+            <textarea
+              value={probblemDesc}
+              onChange={(e) => setProbblemDesc(e.target.value)}
+              className="w-full h-full bg-black p-5"
+            ></textarea>
+          </div>
+          <div>
+            <div className="h-full w-full border-white border p-5">
+              <ReactMarkdown>{probblemDesc}</ReactMarkdown>
+            </div>
           </div>
         </div>
       </div>
-      <h3 className="mt-10">Problem Description</h3>
-      <div className="flex-1 grid grid-cols-2 text-white border-white border rounded-xl">
-        <div>
-          <textarea
-            value={probblemDesc}
-            onChange={(e) => setProbblemDesc(e.target.value)}
-            className="w-full h-full bg-black p-5"
-          ></textarea>
+
+      {/* Code Editors for initial and driver code */}
+      <div className="mt-10 flex flex-col gap-2">
+        <div className="grid grid-cols-2">
+          <h3>Initial Code</h3>
+          <h3>Driver Code</h3>
         </div>
-        <div>
-          <div className="h-full w-full border-white border p-5">
-            <ReactMarkdown>{probblemDesc}</ReactMarkdown>
+        <div className="grid min-h-[36rem] grid-cols-2 text-white border-white border rounded-xl">
+          <div>
+            <Editor
+              theme="vs-dark"
+              defaultLanguage="cpp"
+              defaultValue={initCode}
+              onChange={(data) => {
+                setInitCode(data?.toString() || "");
+              }}
+              onMount={(editor) => {
+                // setlgEditorMounted(true);
+              }}
+            />
+          </div>
+          <div>
+            <Editor
+              theme="vs-dark"
+              defaultLanguage="cpp"
+              defaultValue={driverCode}
+              onChange={(data) => {
+                setDriverCode(data?.toString() || "");
+              }}
+              onMount={(editor) => {
+                // setlgEditorMounted(true);
+              }}
+            />
           </div>
         </div>
       </div>
+
+      {/* Input and Expected Output */}
+      <div className="mt-10 flex flex-col gap-2">
+        <div className="grid grid-cols-2">
+          <h3>Expected Input</h3>
+          <h3>Expected Output</h3>
+        </div>
+        <div className="grid min-h-[36rem] grid-cols-2 text-white border-white border rounded-xl">
+          <div>
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="w-full h-full bg-black p-5"
+            ></textarea>
+          </div>
+          <div>
+            <textarea
+              value={expectedOutput}
+              onChange={(e) => setExpectedOutput(e.target.value)}
+              className="w-full h-full bg-black p-5 border border-white rounded-xl"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      {/* Create Problem Button */}
       <button
         className="cta-button-primary mt-5"
         onClick={async () => {
@@ -96,6 +163,9 @@ export default function CreateProblemPage() {
             difficulty,
             description: probblemDesc,
             boilerplate: initCode,
+            driverCode,
+            input,
+            expectedOutput,
           });
           setCreatingProblem(false);
           if (response.success) {
@@ -104,6 +174,9 @@ export default function CreateProblemPage() {
             setDifficulty("Easy");
             setProbblemDesc("");
             setInitCode("");
+            setDriverCode("");
+            setInput("");
+            setExpectedOutput("");
             alert("Problem created successfully");
           } else if (response.error) {
             alert("Failed to create problem");

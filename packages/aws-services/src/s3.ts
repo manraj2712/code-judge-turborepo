@@ -1,4 +1,8 @@
-import { GetObjectCommand, S3Client as S3C } from "@aws-sdk/client-s3";
+import {
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client as S3C,
+} from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 require("dotenv").config();
 
@@ -56,6 +60,47 @@ export class S3ClientClass {
           bucketName: bucketName,
           key: file,
           directory,
+        })
+      )
+    );
+  }
+
+  public async uploadObject({
+    bucketName,
+    directory,
+    key,
+    file,
+  }: {
+    bucketName: string;
+    key: string;
+    directory: string;
+    file: Buffer;
+  }) {
+    await this.clientInstance.send(
+      new PutObjectCommand({
+        Bucket: bucketName,
+        Key: `${directory}/${key}`,
+        Body: file,
+      })
+    );
+  }
+
+  public async uploadMultipleObjects({
+    bucketName,
+    files,
+    directory,
+  }: {
+    bucketName: string;
+    files: { key: string; file: Buffer }[];
+    directory: string;
+  }) {
+    await Promise.all(
+      files.map((file) =>
+        this.uploadObject({
+          bucketName: bucketName,
+          key: file.key,
+          directory,
+          file: file.file,
         })
       )
     );

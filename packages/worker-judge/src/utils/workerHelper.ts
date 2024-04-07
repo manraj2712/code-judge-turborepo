@@ -4,7 +4,7 @@ import { finished } from "stream/promises";
 import { Readable } from "stream";
 import { ReadableStream } from "stream/web";
 import { joinPath, getImportsByLanguage, getUnixPath } from ".";
-import { s3client } from "@manraj2712/aws-services";
+import { s3ProblemsBucketName, s3client } from "@manraj2712/aws-services";
 
 type ExecutionFilePaths = {
   pathToMain: string;
@@ -38,7 +38,7 @@ async function generateExecutionFilePaths({
   const fileNames = ["driver-code.txt", "input.txt", "expected-output.txt"];
 
   const signedUrls = await s3client.getMultipleObjectURLs({
-    bucketName: "codestreax-problems",
+    bucketName: s3ProblemsBucketName,
     files: fileNames,
     directory: problemId,
   });
