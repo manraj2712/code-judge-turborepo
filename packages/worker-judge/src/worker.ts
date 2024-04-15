@@ -57,15 +57,15 @@ const processResponse = async (message: Message) => {
       });
       await sqsclient.deleteMessage({ receiptHandle: message.ReceiptHandle! });
     } catch (e: any) {
-      prisma.submission.update({
+      await prisma.submission.update({
         where: { id: submissionId },
         data: {
           status: Status.WA,
-          output: e.toString(),
+          output: `Error: \n\n${e.error}`,
           time: e.timeToExecute,
         },
       });
-      sqsclient.deleteMessage({ receiptHandle: message.ReceiptHandle! });
+      await sqsclient.deleteMessage({ receiptHandle: message.ReceiptHandle! });
     }
   } catch (e) {
     console.log(`ERROR: while processing queue`);

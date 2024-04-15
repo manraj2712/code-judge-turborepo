@@ -3,7 +3,7 @@
 export default function ProcessingSpinner() {
   return (
     <div role="status" className="flex">
-      <p className="mr-1 text-lg">Processing...</p>
+      <p className="mr-2 text-lg">We are analysing your code ...</p>
       <svg
         aria-hidden="true"
         className="w-6 h-6 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-green-600"
