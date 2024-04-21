@@ -5,16 +5,25 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/../public/images/logo.png";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { adminsEmail } from "@/constants";
 
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar({ children }: { children: React.ReactNode }) {
+  const session = useSession();
+  const user= session.data?.user.email;
   const navigation = [
     { name: "Home", href: "/", current: true },
     { name: "Explore", href: "/explore", current: false },
+    
   ];
+  
+  if (user && adminsEmail.includes(user)) {
+    navigation.push({name:'Create Problem', href:'/create-problem', current:false});
+  }
   return (
     <Disclosure as="nav" className="border-default-bottom">
       {({ open }) => (

@@ -3,6 +3,8 @@ import ReactMarkdown from "react-markdown";
 import { useState } from "react";
 import axios from "axios";
 import { Editor } from "@monaco-editor/react";
+import { useSession } from "next-auth/react";
+import { adminsEmail } from "@/constants";
 
 const handleSubmit = async ({
   title,
@@ -43,6 +45,15 @@ const handleSubmit = async ({
   }
 };
 export default function CreateProblemPage() {
+  const session=useSession();
+  const user=session.data?.user.email;
+  if(!user || !adminsEmail.includes(user)){
+    return (
+      <div className="flex flex-1 justify-center items-center">
+        <h1 className="text-3xl font-bold">You are not Authorised to Access this page </h1>
+      </div>
+    );
+  }
   const [probblemDesc, setProbblemDesc] = useState("");
   const [initCode, setInitCode] = useState("");
   const [driverCode, setDriverCode] = useState("");

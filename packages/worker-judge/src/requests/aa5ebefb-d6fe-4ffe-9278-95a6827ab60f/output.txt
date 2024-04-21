@@ -1,0 +1,3 @@
+Failed for test case 1
+Expected output: 9
+Your output: 6421968
