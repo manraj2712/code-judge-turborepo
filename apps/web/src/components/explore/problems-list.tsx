@@ -1,5 +1,6 @@
 import { getDifficultyColor } from "@/constants";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import axios from "axios";
 import Link from "next/link";
 
 const columns = [
@@ -18,25 +19,30 @@ type ProblemListItem = {
 };
 
 const fetchProblemList = async () => {
-  const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/problems`;
-  const res = await fetch(url, {
-    method: "GET",
-  });
-  const resJson = await res.json();
-  const problems: ProblemListItem[] = [];
-  resJson.forEach((problem: any) => {
-    problems.push({
-      id: problem.id,
-      status: "AC",
-      title: problem.title,
-      acceptance:
-        problem.acceptanceRate < 1
-          ? `${problem.acceptanceRate.toFixed(0)}%`
-          : "-",
-      difficulty: problem.difficulty,
+  try {
+    const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/problems`;
+    const res = await axios({
+      method: "get",
+      url,
     });
-  });
-  return problems;
+    const problems: ProblemListItem[] = [];
+    res.data.forEach((problem: any) => {
+      problems.push({
+        id: problem.id,
+        status: "AC",
+        title: problem.title,
+        acceptance:
+          problem.acceptanceRate < 1
+            ? `${problem.acceptanceRate.toFixed(0)}%`
+            : "-",
+        difficulty: problem.difficulty,
+      });
+    });
+    return problems;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 };
 
 const ProblemsList = async () => {
