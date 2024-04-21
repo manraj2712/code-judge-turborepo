@@ -11,6 +11,8 @@ export const questionStatuses: Array<Filter> = [
   { label: "Unsolved", value: "unsolved" },
 ];
 
+export const adminsEmail: Array<string> = ["anshjain638@gmail.com","manrajs.2712@gmail.com"];
+
 export const getDifficultyColor = (difficulty: string) => {
   switch (difficulty) {
     case "easy":
