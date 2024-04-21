@@ -15,7 +15,25 @@ export async function GET(req: NextRequest) {
     take: 20,
     skip: 0,
   });
+  // find submissions for this problem and calculate acceptance rate and total submissions
+  const promises=problems.map(async (problem) => {
+    const submissions = await prisma.submission.findMany({
+      where: {
+        problemId: problem.id,
+      },
+    });
+    const totalSubmissions = submissions.length;
+    const acceptedSubmissions = submissions.filter(
+      (submission) => submission.status === "AC"
+    ).length;
+    problem.totalSubmissions = totalSubmissions;
+    problem.acceptanceRate = totalSubmissions === 0 ? 0 : (acceptedSubmissions / totalSubmissions) * 100;
+    console.log(problem);
+    return problem;
+  });
 
+  await Promise.all(promises);
+  
   return NextResponse.json(problems, { status: 200 });
 }
 

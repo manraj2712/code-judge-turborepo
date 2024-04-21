@@ -13,6 +13,18 @@ export default async function ProblemPage({
       id: id as string,
     },
   });
+  // find submissions for this problem and calculate acceptance rate and total submissions
+  const submissions = await prisma.submission.findMany({
+    where: {
+      problemId: id as string,
+    },
+  });
+  const totalSubmissions = submissions.length;
+  const acceptedSubmissions = submissions.filter(
+    (submission) => submission.status === "AC"
+  ).length;
+
+  const acceptanceRate = (acceptedSubmissions / totalSubmissions) * 100;
 
   if (!problem) return <div>{"Problem not found."}</div>;
 
@@ -25,8 +37,8 @@ export default async function ProblemPage({
         header: {
           title: problem.title,
           difficulty: problem.difficulty,
-          acceptanceRate: problem.acceptanceRate,
-          totalSubmissions: problem.totalSubmissions,
+          acceptanceRate: parseFloat(acceptanceRate.toFixed(2)),
+          totalSubmissions: totalSubmissions,
         },
       }}
     />

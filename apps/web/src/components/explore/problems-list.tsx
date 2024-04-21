@@ -25,6 +25,7 @@ const fetchProblemList = async () => {
       method: "get",
       url,
     });
+    console.log(res.data);
     const problems: ProblemListItem[] = [];
     res.data.forEach((problem: any) => {
       problems.push({
@@ -32,9 +33,7 @@ const fetchProblemList = async () => {
         status: "AC",
         title: problem.title,
         acceptance:
-          problem.acceptanceRate < 1
-            ? `${problem.acceptanceRate.toFixed(0)}%`
-            : "-",
+          problem.acceptanceRate > 0 ? problem.acceptanceRate.toFixed(0) + "%" : "-",
         difficulty: problem.difficulty,
       });
     });
