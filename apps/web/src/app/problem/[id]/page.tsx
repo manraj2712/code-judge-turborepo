@@ -23,9 +23,8 @@ export default async function ProblemPage({
   const acceptedSubmissions = submissions.filter(
     (submission) => submission.status === "AC"
   ).length;
-
-  const acceptanceRate = (acceptedSubmissions / totalSubmissions) * 100;
-
+  const acceptanceRate = totalSubmissions === 0 ? 0 : (acceptedSubmissions / totalSubmissions) * 100;
+  
   if (!problem) return <div>{"Problem not found."}</div>;
 
   return (
