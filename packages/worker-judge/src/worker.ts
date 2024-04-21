@@ -46,11 +46,12 @@ const processResponse = async (message: Message) => {
         files,
         submissionId: submissionId!,
       });
+
       console.log({ res });
       const updatedPrisma = await prisma.submission.update({
         where: { id: submissionId },
         data: {
-          status: Status.AC,
+          status: res.output === "Success" ? Status.AC : Status.WA,
           output: res.output,
           time: res.timeToExecute,
         },
