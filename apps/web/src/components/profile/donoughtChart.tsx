@@ -1,13 +1,23 @@
-'use client'
+"use client";
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js";
 
-const DonutProgressBar = ({Total_Questions,questions_completed}:any) => {
+const DonutProgressBar = ({
+  totalQuestions,
+  questionsCompletedByUser,
+}: {
+  totalQuestions: number;
+  questionsCompletedByUser: number;
+}) => {
   const chartRef = useRef(null);
-  const progress = ((Total_Questions - questions_completed) / Total_Questions) * 100;
+  const progress = totalQuestions
+    ? (questionsCompletedByUser / totalQuestions) * 100
+    : 0;
 
   useEffect(() => {
-    const ctx = (chartRef.current as HTMLCanvasElement | null)?.getContext("2d");
+    const ctx = (chartRef.current as HTMLCanvasElement | null)?.getContext(
+      "2d"
+    );
 
     if (ctx) {
       new Chart(ctx, {
@@ -36,7 +46,7 @@ const DonutProgressBar = ({Total_Questions,questions_completed}:any) => {
       <canvas ref={chartRef} />
       <div className="absolute inset-0 flex flex-col items-center justify-center ">
         <div className="text-xl font-semibold mt-2 text-neutral-200">
-          {questions_completed}
+          {questionsCompletedByUser}
         </div>
         <div className="text-neutral-400 text-sm">solved</div>
       </div>
