@@ -75,15 +75,7 @@ export default function ProblemSubmittionScreen({
         <ProblemHeaderComponent
           header={problem.header}
         ></ProblemHeaderComponent>
-        <ProblemDescription
-          description={problem.description}
-        ></ProblemDescription>
-        <ProblemDescription
-          description={problem.description}
-        ></ProblemDescription>
-        <ProblemDescription
-          description={problem.description}
-        ></ProblemDescription>
+        <ReactMarkdown className="">{problem.description}</ReactMarkdown>
         <div
           className="h-96 mt-10 mb-20"
           style={{
