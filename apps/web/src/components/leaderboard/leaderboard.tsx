@@ -16,17 +16,24 @@ const leaderBoard = () => {
           (user: User) => user.submissions.length > 0
         );
         const sortedUsers = [...usersWithSubmissions].sort(
-          (a: User, b: User) => b.submissions.length - a.submissions.length
-        );
-        let rank = 1;
-        let prevSubmissionsCount = sortedUsers[0].submissions.length;
-        sortedUsers.forEach((user, index) => {
-          if (user.submissions.length < prevSubmissionsCount) {
-            rank = index + 1;
-            prevSubmissionsCount = user.submissions.length;
+          (a: User, b: User) => {
+            // First sort by the number of submissions
+            const diff = b.submissions.length - a.submissions.length;
+            if (diff !== 0) return diff;
+
+            // If the number of submissions is the same, sort by name
+            return a.name.localeCompare(b.name);
           }
-          user.rank = rank;
-        });
+        );
+        // let rank = 1;
+        // let prevSubmissionsCount = sortedUsers[0].submissions.length;
+        // sortedUsers.forEach((user, index) => {
+        //   if (user.submissions.length < prevSubmissionsCount) {
+        //     rank = index + 1;
+        //     prevSubmissionsCount = user.submissions.length;
+        //   }
+        //   user.rank = rank;
+        // });
 
         setUsers(sortedUsers);
       } catch (error) {
@@ -36,15 +43,6 @@ const leaderBoard = () => {
 
     fetchUsers();
   }, []);
-  let rank = 0;
-  let prevUserSubmissionsLength = -1;
-  users.forEach((user, index) => {
-    if (user.submissions.length !== prevUserSubmissionsLength) {
-      rank = index + 1;
-      prevUserSubmissionsLength = user.submissions.length;
-    }
-    user.rank = rank;
-  });
   return (
     <div className="m-4 rounded-md overflow-hidden">
       <table className="table-fixed overflow-y-scroll lg:table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -68,14 +66,14 @@ const leaderBoard = () => {
                   icon={faTrophy}
                   className="mr-2 text-sm"
                   color={
-                    user.rank === 1
+                    index + 1 === 1
                       ? "gold"
-                      : user.rank === 2
+                      : index + 1 === 2
                         ? "silver"
                         : "#CD7F32"
                   }
                 />
-                {user.rank}
+                {index + 1}
               </td>
               <td className="px-4 py-3 text-ms  font-semibold border-r-0 sm:border-r text-center ">
                 {user.name}
