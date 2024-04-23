@@ -1,50 +1,50 @@
 "use client";
-import { faTrophy } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faArrowRight,
+  faTrophy,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { User } from "@/types/user";
 import React, { useEffect, useState } from "react";
 
-const leaderBoard = () => {
+const Leaderboard = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const pageSize = 10; // Update page size to a reasonable value, like 10
+
+  const fetchUsers = async () => {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/leaderboard?page=${currentPage}&pageSize=${pageSize}`;
+      const res = await axios.get(url);
+      const usersWithSubmissions = res.data.filter(
+        (user: User) => user.submissions.length > 0
+      );
+      console.log(usersWithSubmissions);
+      const sortedUsers = usersWithSubmissions.sort((a: User, b: User) =>
+        a.name.localeCompare(b.name)
+      );
+      const totalUsersCount = res.headers["x-total-count"]; // Get total count from response headers
+
+      setTotalPages(Math.ceil(totalUsersCount / pageSize)); // Calculate total pages based on total count
+      setUsers(sortedUsers);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/leaderboard`;
-        const res = await axios.get(url);
-        const usersWithSubmissions = res.data.filter(
-          (user: User) => user.submissions.length > 0
-        );
-        const sortedUsers = [...usersWithSubmissions].sort(
-          (a: User, b: User) => {
-            // First sort by the number of submissions
-            const diff = b.submissions.length - a.submissions.length;
-            if (diff !== 0) return diff;
-
-            // If the number of submissions is the same, sort by name
-            return a.name.localeCompare(b.name);
-          }
-        );
-        // let rank = 1;
-        // let prevSubmissionsCount = sortedUsers[0].submissions.length;
-        // sortedUsers.forEach((user, index) => {
-        //   if (user.submissions.length < prevSubmissionsCount) {
-        //     rank = index + 1;
-        //     prevSubmissionsCount = user.submissions.length;
-        //   }
-        //   user.rank = rank;
-        // });
-
-        setUsers(sortedUsers);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-
     fetchUsers();
-  }, []);
+  }, [currentPage, pageSize]);
+
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return (
-    <div className="m-4 rounded-md overflow-hidden">
+    <div className="flex flex-col m-4 rounded-md overflow-hidden">
       <table className="table-fixed overflow-y-scroll lg:table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700">
         <thead>
           <tr className="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase ">
@@ -64,16 +64,22 @@ const leaderBoard = () => {
               <td className="px-4 py-3 text-ms font-semibold border-r text-center  ">
                 <FontAwesomeIcon
                   icon={faTrophy}
-                  className="mr-2 text-sm"
+                  className={`mr-2 text-sm ${
+                    (currentPage - 1) * pageSize + index + 1 < 4
+                      ? "visible"
+                      : "hidden"
+                  }`}
                   color={
-                    index + 1 === 1
+                    (currentPage - 1) * pageSize + index + 1 === 1
                       ? "gold"
-                      : index + 1 === 2
+                      : (currentPage - 1) * pageSize + index + 1 === 2
                         ? "silver"
-                        : "#CD7F32"
+                        : (currentPage - 1) * pageSize + index + 1 === 3
+                          ? "orange"
+                          : undefined
                   }
                 />
-                {index + 1}
+                {(currentPage - 1) * pageSize + index + 1}
               </td>
               <td className="px-4 py-3 text-ms  font-semibold border-r-0 sm:border-r text-center ">
                 {user.name}
@@ -85,8 +91,35 @@ const leaderBoard = () => {
           ))}
         </tbody>
       </table>
+      <div className="flex item-center m-4 justify-center ">
+        <button
+          onClick={() => goToPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          <FontAwesomeIcon
+            //left arrow
+            icon={faArrowLeft}
+            className="mr-2 text-sm"
+            color={currentPage == 1 ? "grey" : "dark grey"}
+          />
+        </button>
+        <span className=" mx-4 ">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() => goToPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          <FontAwesomeIcon
+            //right arrow
+            icon={faArrowRight}
+            className="ml-2 text-sm"
+            color={currentPage == totalPages ? "grey" : "dark grey"}
+          />
+        </button>
+      </div>
     </div>
   );
 };
 
-export default leaderBoard;
+export default Leaderboard;
