@@ -12,7 +12,14 @@ export async function GET(req: NextRequest) {
 
     const skip = (page - 1) * pageSize;
 
-    const usersWithSubmissionCounts = await prisma.user.findMany({
+    const usersWithSubmission = await prisma.user.findMany({
+      where: {
+        submissions: {
+          some: {
+            status: "AC",
+          },
+        },
+      },
       select: {
         id: true,
         name: true,
@@ -42,7 +49,7 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    return NextResponse.json(usersWithSubmissionCounts, {
+    return NextResponse.json(usersWithSubmission, {
       headers: {
         "X-Total-Count": totalUsersCount.toString(),
       },

@@ -19,10 +19,11 @@ const Leaderboard = () => {
     try {
       const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/leaderboard?page=${currentPage}&pageSize=${pageSize}`;
       const res = await axios.get(url);
-      const usersWithSubmissions = res.data.filter(
-        (user: User) => user.submissions.length > 0
-      );
-      console.log(usersWithSubmissions);
+      const usersWithSubmissions = res.data;
+      // const usersWithSubmissions = res.data.filter(
+      //   (user: User) => user.submissions.length > 0
+      // );
+      // console.log(usersWithSubmissions);
       const sortedUsers = usersWithSubmissions.sort((a: User, b: User) =>
         a.name.localeCompare(b.name)
       );
