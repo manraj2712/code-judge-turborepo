@@ -79,6 +79,7 @@ const handler = NextAuth({
               password: Math.random().toString(36).slice(-8),
             },
           });
+          user.id = dbuser.id;
         } catch (e) {
           console.log(e);
           return false;
