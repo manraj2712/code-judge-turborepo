@@ -14,7 +14,7 @@ const Leaderboard = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const pageSize = 2; // Update page size to a reasonable value, like 10
+  const pageSize = 10; // Update page size to a reasonable value, like 10
 
   const fetchUsers = async () => {
     try {
