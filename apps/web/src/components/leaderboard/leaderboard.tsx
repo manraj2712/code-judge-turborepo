@@ -10,14 +10,13 @@ import { User } from "@/types/user";
 import React, { useEffect, useState } from "react";
 import Loading from "@/app/leaderboard/loading";
 const Leaderboard = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [users, setUsers] = useState<User[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const pageSize = 10; // Update page size to a reasonable value, like 10
+  const pageSize = 2; // Update page size to a reasonable value, like 10
 
   const fetchUsers = async () => {
-    setLoading(true);
     try {
       const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/leaderboard?page=${currentPage}&pageSize=${pageSize}`;
       const res = await axios.get(url);
