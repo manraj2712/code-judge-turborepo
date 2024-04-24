@@ -1,13 +1,10 @@
 import React from "react";
 import ProgressBar from "./progressbar";
 import DonutProgressBar from "./donoughtChart";
-import logo from "../../../public/images/logo.png";
-import Image from "next/image";
-import { getServerSession } from "next-auth";
 import "./style.css";
-import { Difficulty, Status, prisma } from "@manraj2712/database";
-const stats = async () => {
-  const session = await getServerSession();
+import { Status, prisma } from "@manraj2712/database";
+
+const stats = async ({ email }: { email: string }) => {
   const res = await prisma.problem.groupBy({
     by: ["difficulty"],
     _count: {
@@ -32,36 +29,35 @@ const stats = async () => {
     HARD: 0,
   };
 
-  if (session && session.user && session.user.email) {
-    // fetch questions completed by user based on difficulty from submissions table use groupBy and check difficulty from problem table
-    const submissions = await prisma.submission.findMany({
-      where: {
-        user: {
-          email: session.user.email,
-        },
-        status: Status.AC,
+  // fetch questions completed by user based on difficulty from submissions table use groupBy and check difficulty from problem table
+  const submissions = await prisma.submission.findMany({
+    where: {
+      user: {
+        email: email,
       },
-      include: {
-        problem: true,
-      },
-    });
+      status: Status.AC,
+    },
+    distinct: ["problemId"],
+    include: {
+      problem: true,
+    },
+  });
 
-    userSubmissionsByDifficulty = submissions.reduce(
-      (acc, submission) => {
-        const difficulty = submission.problem.difficulty;
-        if (acc[difficulty] === undefined) {
-          acc[difficulty] = 0;
-        }
-        acc[difficulty]++;
-        return acc;
-      },
-      {
-        EASY: 0,
-        MEDIUM: 0,
-        HARD: 0,
+  userSubmissionsByDifficulty = submissions.reduce(
+    (acc, submission) => {
+      const difficulty = submission.problem.difficulty;
+      if (acc[difficulty] === undefined) {
+        acc[difficulty] = 0;
       }
-    );
-  }
+      acc[difficulty]++;
+      return acc;
+    },
+    {
+      EASY: 0,
+      MEDIUM: 0,
+      HARD: 0,
+    }
+  );
 
   return (
     <div className="flex flex-col w-full">

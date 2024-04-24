@@ -80,7 +80,7 @@ export default function Hero() {
                 </button>
                 <button
                   onClick={() => {
-                    router.push(data?.user ? "/profile" : "/signin");
+                    router.push(data?.user ? "/profile/my-profile" : "/signin");
                   }}
                   className="cta-button-gray"
                 >
