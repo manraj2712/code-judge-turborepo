@@ -71,6 +71,9 @@ const handler = NextAuth({
             },
             update: {},
             create: {
+              username: `${user.email!.split("@")[0]}${Math.floor(
+                Math.random() * 1000
+              )}`,
               email: user.email!,
               name: user.name!,
               password: Math.random().toString(36).slice(-8),
