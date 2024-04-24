@@ -6,13 +6,12 @@ export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const page = url.searchParams.get("page");
     const pageSize = url.searchParams.get("pageSize");
-
-    if (!page || !pageSize) {
-      throw new Error("Missing page or pageSize query parameters.");
+    let pageNumber = 1;
+    let size = 10;
+    if (page && pageSize) {
+      pageNumber = Math.max(parseInt(page), 1); // Ensure page is a positive integer
+      size = Math.max(parseInt(pageSize), 1); // Ensure pageSize is a positive integer
     }
-
-    const pageNumber = Math.max(parseInt(page), 1); // Ensure page is a positive integer
-    const size = Math.max(parseInt(pageSize), 1); // Ensure pageSize is a positive integer
 
     const skip = (pageNumber - 1) * size;
 
