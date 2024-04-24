@@ -3,14 +3,18 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const page = Math.max(parseInt(searchParams.get("page") || "1"), 1); // Ensure page is a positive integer
-    const pageSize = Math.max(
-      parseInt(searchParams.get("pageSize") || "10"),
-      1
-    ); // Ensure pageSize is a positive integer
+    const url = new URL(req.url);
+    const page = url.searchParams.get("page");
+    const pageSize = url.searchParams.get("pageSize");
 
-    const skip = (page - 1) * pageSize;
+    if (!page || !pageSize) {
+      throw new Error("Missing page or pageSize query parameters.");
+    }
+
+    const pageNumber = Math.max(parseInt(page), 1); // Ensure page is a positive integer
+    const size = Math.max(parseInt(pageSize), 1); // Ensure pageSize is a positive integer
+
+    const skip = (pageNumber - 1) * size;
 
     const usersWithSubmission = await prisma.user.findMany({
       where: {
@@ -36,7 +40,7 @@ export async function GET(req: NextRequest) {
         },
       },
       skip,
-      take: pageSize,
+      take: size,
     });
 
     const totalUsersCount = await prisma.user.count({
