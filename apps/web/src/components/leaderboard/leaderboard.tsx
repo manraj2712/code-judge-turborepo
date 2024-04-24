@@ -8,25 +8,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { User } from "@/types/user";
 import React, { useEffect, useState } from "react";
-import Loading from "@/app/leaderboard/loading";
+import Loading from "@/app/leaderboard/loading1";
 const Leaderboard = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [users, setUsers] = useState<User[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const pageSize = 10; // Update page size to a reasonable value, like 10
+  const offset = 10; // Number of users to show per page
 
   const fetchUsers = async () => {
     try {
-      const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/leaderboard?page=${currentPage}&pageSize=${pageSize}`;
-      const res = await axios.get(url);
-      const usersWithSubmissions = res.data;
+      const url = "/api/leaderboard";
+      const res = await axios.get(url, {
+        params: {
+          page: currentPage,
+          offset,
+        },
+      });
+      // await new Promise((resolve) => setTimeout(resolve, 1000000000000));
+
+      const usersWithSubmissions = res.data.users;
       const sortedUsers = usersWithSubmissions.sort((a: User, b: User) =>
         a.name.localeCompare(b.name)
       );
-      const totalUsersCount = res.headers["x-total-count"]; // Get total count from response headers
+      const totalUsersCount = res.data.userCount; // Get total count from response headers
 
-      setTotalPages(Math.ceil(totalUsersCount / pageSize)); // Calculate total pages based on total count
+      setTotalPages(Math.ceil(totalUsersCount / offset)); // Calculate total pages based on total count
       setUsers(sortedUsers);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -37,7 +44,7 @@ const Leaderboard = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, [currentPage, pageSize]);
+  }, [currentPage]);
 
   const goToPage = (page: number) => {
     setCurrentPage(page);
@@ -50,12 +57,12 @@ const Leaderboard = () => {
     <>
       <div className="flex justify-center items-center mt-8 gap-4 ">
         <h1 className=" font-bold text-2xl ">
-          Leaderboard <FontAwesomeIcon icon={faTrophy} color="gold" />
+          Leaderboard <FontAwesomeIcon icon={faTrophy} color="gold" size="lg" />
         </h1>
       </div>
       <div className="flex flex-col m-4 rounded-md overflow-hidden">
         <div className="rounded-md overflow-hidden">
-          <table className="table-fixed overflow-y-scroll lg:table-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <table className="table-fixed overflow-y-scroll lg:table-fixed min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead>
               <tr className="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase ">
                 <th className="px-4 py-3">Rankings</th>
@@ -75,21 +82,21 @@ const Leaderboard = () => {
                     <FontAwesomeIcon
                       icon={faTrophy}
                       className={`mr-2 text-sm ${
-                        (currentPage - 1) * pageSize + index + 1 < 4
+                        (currentPage - 1) * offset + index + 1 < 4
                           ? "visible"
                           : "hidden"
                       }`}
                       color={
-                        (currentPage - 1) * pageSize + index + 1 === 1
+                        (currentPage - 1) * offset + index + 1 === 1
                           ? "gold"
-                          : (currentPage - 1) * pageSize + index + 1 === 2
+                          : (currentPage - 1) * offset + index + 1 === 2
                             ? "silver"
-                            : (currentPage - 1) * pageSize + index + 1 === 3
+                            : (currentPage - 1) * offset + index + 1 === 3
                               ? "orange"
                               : undefined
                       }
                     />
-                    {(currentPage - 1) * pageSize + index + 1}
+                    {(currentPage - 1) * offset + index + 1}
                   </td>
                   <td className="px-4 py-3 text-ms  font-semibold border-r-0 sm:border-r text-center ">
                     {user.name}

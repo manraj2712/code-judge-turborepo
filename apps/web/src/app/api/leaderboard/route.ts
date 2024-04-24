@@ -2,17 +2,18 @@ import { prisma } from "@manraj2712/database";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const url = new URL(req.url);
-  const page = url.searchParams.get("page");
-  const pageSize = url.searchParams.get("pageSize");
-  if (!page || !pageSize) {
-    throw new Error("Missing page or pageSize query parameter");
-  }
-  const pageNumber = Math.max(parseInt(page), 1); // Ensure page is a positive integer
-  const size = Math.max(parseInt(pageSize), 1); // Ensure pageSize is a positive integer
-  const skip = (pageNumber - 1) * size;
+  let page = parseInt(req.nextUrl.searchParams.get("page") || "1");
+  let offset = parseInt(req.nextUrl.searchParams.get("offset") || "10");
 
-  const usersWithSubmission = await prisma.user.findMany({
+  if (isNaN(page) || page < 1) {
+    page = 1;
+  }
+  if (isNaN(offset) || offset < 1) {
+    offset = 10;
+  }
+  const skip = (page - 1) * offset;
+
+  const usersWithSubmissionPromise = prisma.user.findMany({
     where: {
       submissions: {
         some: {
@@ -36,10 +37,10 @@ export async function GET(req: NextRequest) {
       },
     },
     skip,
-    take: size,
+    take: offset,
   });
 
-  const totalUsersCount = await prisma.user.count({
+  const totalUsersCountPromise = prisma.user.count({
     where: {
       submissions: {
         some: {
@@ -48,10 +49,12 @@ export async function GET(req: NextRequest) {
       },
     },
   });
-
-  return NextResponse.json(usersWithSubmission, {
-    headers: {
-      "X-Total-Count": totalUsersCount.toString(),
-    },
+  const [usersWithSubmission, totalUsersCount] = await Promise.all([
+    usersWithSubmissionPromise,
+    totalUsersCountPromise,
+  ]);
+  return NextResponse.json({
+    users: usersWithSubmission,
+    userCount: totalUsersCount.toString(),
   });
 }
