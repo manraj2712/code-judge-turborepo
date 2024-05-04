@@ -6,6 +6,7 @@ import RecoilRootLayout from "../providers/recoil-root-provider";
 import Navbar from "@/components/navbar/navbar";
 import NavbarProfile from "@/components/navbar/navbar-profile";
 import FooterProvider from "@/components/footer/footer-provider";
+import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({
         <div className="min-h-screen flex flex-col">
           <RecoilRootLayout>
             <NextAuthProvider>
+              <Toaster position="bottom-center" />
               <Navbar>
                 <NavbarProfile />
               </Navbar>

@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import {
   bottomSheetOpenState,
@@ -7,6 +8,7 @@ import {
 } from "@/store/atoms/problem";
 import { useState } from "react";
 import { Language } from "@manraj2712/database";
+import toast from "react-hot-toast";
 
 async function submitCode({
   code,
@@ -17,17 +19,21 @@ async function submitCode({
   problemId: string;
   language: Language;
 }) {
-  const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/submit`;
-  const response = await fetch(url, {
+  const url = "/api/submit";
+  const response = await axios({
+    url,
     method: "POST",
-    body: JSON.stringify({ code, problemId, language }),
+    data: {
+      code,
+      problemId,
+      language,
+    },
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
-  if (!response.ok) {
-    throw new Error(await response.text());
-  }
-
-  return response.json();
+  return response.data;
 }
 
 export default function EditorBottomBar({
@@ -61,11 +67,16 @@ export default function EditorBottomBar({
             language,
           })
             .then((data) => {
-              console.log(data);
               setSubmissionId(data.id);
             })
-            .catch((err) => {
-              console.error(err);
+            .catch((err: any) => {
+              console.log(err);
+              setIsLoading(false);
+              setOpen(false);
+              if (err.response.status === 401) {
+                return toast.error("Please login to submit the code");
+              }
+              toast.error("Failed to submit the code", err.response.data);
             });
         }}
       >

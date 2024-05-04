@@ -34,7 +34,7 @@ const processResponse = async (message: Message) => {
       return;
     }
 
-    const files = await generateExecutionFilePaths({
+    await generateExecutionFilePaths({
       submissionId: submission.id,
       userSubmittedCode: submission.code,
       problemId: submission.problemId,
@@ -43,11 +43,9 @@ const processResponse = async (message: Message) => {
 
     try {
       const res = await executeDockerCommand({
-        files,
         submissionId: submissionId!,
+        language: submission.language,
       });
-
-      console.log({ res });
       const updatedPrisma = await prisma.submission.update({
         where: { id: submissionId },
         data: {
@@ -58,15 +56,20 @@ const processResponse = async (message: Message) => {
       });
       await sqsclient.deleteMessage({ receiptHandle: message.ReceiptHandle! });
     } catch (e: any) {
-      await prisma.submission.update({
-        where: { id: submissionId },
-        data: {
-          status: Status.WA,
-          output: `Error: \n\n${e.error}`,
-          time: e.timeToExecute,
-        },
-      });
-      await sqsclient.deleteMessage({ receiptHandle: message.ReceiptHandle! });
+      console.log(`ERROR: while processing submission : ${submissionId}`, e);
+      if (e.status === 200) {
+        await prisma.submission.update({
+          where: { id: submissionId },
+          data: {
+            status: Status.WA,
+            output: `Error: \n\n${e.error}`,
+            time: e.timeToExecute,
+          },
+        });
+        await sqsclient.deleteMessage({
+          receiptHandle: message.ReceiptHandle!,
+        });
+      }
     }
   } catch (e) {
     console.log(`ERROR: while processing queue`);
