@@ -1,6 +1,5 @@
-export type User = {
-  rank: number;
-  id: string;
-  name: string;
-  submissions: string[];
-};
+import { Submission, User } from "@manraj2712/database";
+
+export type UserWithSubmissions = {
+  submissions: Submission[];
+} & User;
