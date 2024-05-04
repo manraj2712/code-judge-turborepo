@@ -70,7 +70,6 @@ export default function EditorBottomBar({
               setSubmissionId(data.id);
             })
             .catch((err: any) => {
-              console.log(err);
               setIsLoading(false);
               setOpen(false);
               if (err.response.status === 401) {
