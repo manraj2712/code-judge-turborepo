@@ -11,7 +11,7 @@ The Online Code Execution and Assessment Platform for coding practice and automa
 - **User Authentication:** NextAuth.js
 - **Database:** PostgreSQL with Prisma as the ORM
 - **Backend:** Node.js and Express.js
-- **Containerization:** Docker
+- **Containerization and Sandboxing:** Docker
 
 ## Getting Started
 
