@@ -25,10 +25,16 @@ export async function GET(req: NextRequest) {
       id: true,
       name: true,
       email: true,
+      username: true,
       submissions: {
         where: {
           status: "AC",
         },
+        select: {
+          id: true,
+          problemId: true,
+        },
+        distinct: ["problemId"],
       },
     },
     orderBy: {
