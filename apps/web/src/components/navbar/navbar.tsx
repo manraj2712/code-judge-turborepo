@@ -14,15 +14,19 @@ function classNames(...classes: Array<string>) {
 
 export default function Navbar({ children }: { children: React.ReactNode }) {
   const session = useSession();
-  const user= session.data?.user.email;
+  const user = session.data?.user.email;
   const navigation = [
     { name: "Home", href: "/", current: true },
     { name: "Explore", href: "/explore", current: false },
-    
+    { name: "Leaderboard", href: "/leaderboard", current: false },
   ];
-  
+
   if (user && adminsEmail.includes(user)) {
-    navigation.push({name:'Create Problem', href:'/create-problem', current:false});
+    navigation.push({
+      name: "Create Problem",
+      href: "/create-problem",
+      current: false,
+    });
   }
   return (
     <Disclosure as="nav" className="border-default-bottom">
