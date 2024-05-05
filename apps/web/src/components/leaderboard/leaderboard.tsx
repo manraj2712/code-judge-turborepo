@@ -84,7 +84,7 @@ const Leaderboard = () => {
                     key={user.id}
                     className="odd:bg-neutral-900 text-gray-200"
                   >
-                    <td className="flex px-6 py-4 text-base text-center items-center">
+                    <td className="flex px-6 py-4 text-base text-center items-center justify-center">
                       {showTrophy && (
                         <TrophyIcon
                           width={15}
@@ -102,11 +102,11 @@ const Leaderboard = () => {
                         />
                       )}
                       {!showTrophy && <div className="w-3"></div>}
-                      <span className={`mx-2`}>
+                      <span className="mx-2 text-center">
                         {(currentPage - 1) * offset + index + 1}
                       </span>
                     </td>
-                    <td className="table-cell px-6 py-4 text-base text-center">
+                    <td className="table-cell px-6 py-4 text-base text-center hover:text-blue-700">
                       <Link
                         href={`/profile/${user.username}`}
                         children={<p>{user.name}</p>}
